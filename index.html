@@ -3,9 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css">
 	<script src="js/jquery-2.0.3.min.js"></script>
-	<script src="js/bootstrap.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/js/bootstrap.min.js"></script>
+	<style>
+		.row{
+			margin:0 0 10px 0;
+		}
+	</style>
 </head>
 <body>
 	<div class="navbar navbar-static-top">
@@ -20,93 +25,231 @@
 				</li>
 			</ul>
 			<form class="navbar-form form-inline pull-left" action="">
-				<input type="text" class="form-control col-lg-8" placeholder="Search" style="width:300px;">
+				<input type="text" class="form-control col-lg-8" placeholder="Quick Search" style="width:300px;">
 				<div class="btn-group">
-					<button type="button" class="btn btn-default">Search Panel<span class="caret"></span></button>
+					<button type="button" class="btn btn-default">Search</button>
 				</div>
 			</form>
-				</div>
+		</div>
 	</div>
+
+
+
 	<div class="container">
-
-		<div class="row zx-panel-search">
-			<div class="col-lg-12 panel">
-				<div class="row" style="margin-bottom:15px;">
-					<label for="inputKeyword" class="col-lg-1 control-label">Keyword</label>
-					<div class="col-lg-3">
-						<input type="text" class="form-control" id="inputKeyword" placeholder="Keyword">
-					</div>
-					<label for="inputCatalogy" class="col-lg-1 control-label">Catalogy</label>
-					<div class="col-lg-3">
-						<select class="form-control">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-					</div>
-
+		<div class="col-lg-3 left-Panel col-md-4 zx-panel-search">
+			<div class="panel">
+				<div class="panel-heading">
+					Advance Search
 				</div>
 
-				<div class="row">
-					<label for="btngrpColor" class="col-lg-1 control-label">Color</label>
-					<div class="col-lg-5">
-						<div class="btn-group" id="btngrpColor" data-toggle="buttons">
-							<label class="btn btn-primary">
-								<input type="checkbox"> Red
-							</label>
-							<label class="btn btn-primary">
-								<input type="checkbox"> Blue
-							</label>
-							<label class="btn btn-primary">
-								<input type="checkbox"> White
-							</label>
-							<label class="btn btn-primary">
-								<input type="checkbox"> Black
-							</label>
-							<label class="btn btn-primary">
-								<input type="checkbox"> Green
-							</label>
-							<label class="btn btn-primary">
-								<input type="checkbox"> Other
-							</label>
+		   		<div class="panel-body">
+
+					
+<div class="row">
+							<div class="col-lg-3 col-md-3">
+							<label for="inputKeyword" class="control-label">Keyword</label>
 						</div>
+						<div class="col-lg-9 col-md-9">
+							<input type="text" class="form-control" id="inputKeyword" placeholder="Keyword">
+						</div>
+			
+</div>
+
+
+					
+						<div class="row">
+							<label for="selectCatalogy" class="col-lg-3 col-md-3 control-label">Catalogy</label>
+						<div class="col-lg-9 col-md-9">
+							<select class="form-control" id="selectCatalogy">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select>
+						</div>
+						</div>
+				
+
+						<div class="row">
+							<label for="btngrpColor" class="col-lg-3 col-md-3 control-label">Color</label>
+						<div class="col-lg-9 col-md-9">
+							<div class="btn-group" id="btngrpColor" data-toggle="buttons">
+								<label class="btn btn-primary">
+									<input type="checkbox"> Red
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> Blue
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> White
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> Black
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> Green
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> Other
+								</label>
+							</div>
+						</div></div>
+			
+
+<div class="row">
+						<div class=" form-group">
+						<label for="selectCostValue" class="col-lg-3 col-md-3 control-label">Cost</label>
+						<div class="col-lg-5 col-md-5 form-inline">
+							<select class="form-control" id="selectCostValue">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+							</select>
+						</div>
+						<div class="col-lg-4 col-md-4 form-inline form-group">
+							<select class="form-control" id="selectCostMethod">
+								<option>></option>
+								<option>=</option>
+								<option><</option>
+							</select>
+						</div>
+					</div>
+</div>
+
+						<div class="row">
+							<label for="selectPowerValue" class="col-lg-3 col-md-3 control-label">Power</label>
+						<div class="col-lg-5 col-md-5 form-inline">
+							<select class="form-control" id="selectPowerValue">
+								<option data-start="500" data-end="11000" data-step="500">500</option>
+							</select>
+						</div>
+						<div class="col-lg-4 col-md-4">
+							<select class="form-control" id="selectPowerMethod">
+								<option>></option>
+								<option>=</option>
+								<option><</option>
+							</select>
+						</div>
+						</div>
+			
+
+			<div class="row">
+				<label for="selectMark" class="col-lg-3 col-md-3 control-label">Mark</label>
+						<div class="col-lg-9 col-md-9">
+							<select class="form-control" id="selectMark">
+								<option>burning</option>
+								<option>awakening</option>
+							</select>
+						</div>
+			
+			</div>
+						
+
+			
+						<div class="row">
+							<label for="selectRace" class="col-lg-3 col-md-3 control-label">Race</label>
+						<div class="col-lg-9 col-md-9">
+							<select class="form-control" id="selectRace">
+								<option>勇者</option>
+								<option>巨兽</option>
+							</select>
+						</div>
+						</div>
+				
+
+						<div class="row"><label for="selectSet" class="col-lg-3 col-md-3 control-label">Set</label>
+						<div class="col-lg-9 col-md-9">
+							<select class="form-control" id="selectSet">
+								<option>B01「邂逅异世界」</option>
+								<option>B02「巨神的咆哮」</option>
+							</select>
+						</div></div>
+				
+
+						<div class="row"><label for="selectRear" class="col-lg-3 col-md-3 control-label">Rear</label>
+						<div class="col-lg-9 col-md-9">
+							<select class="form-control" id="selectRear">
+								<option>CVR</option>
+								<option>IGR</option>
+							</select>
+						</div></div>
+	
+						<div class="row">
+							<label for="btngrpTag" class="col-lg-3 col-md-3 control-label">Tag</label>
+						<div class="col-lg-9 col-md-9">
+							<div class="btn-group" id="btngrpTag" data-toggle="buttons">
+								<label class="btn btn-primary">
+									<input type="checkbox"> 生命恢复
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> 虚空使者
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> 起始卡
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> 范围2
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> 范围∞
+								</label>
+								<label class="btn btn-primary">
+									<input type="checkbox"> 绝界
+								</label>
+							</div>
+	
+					</div>
+						</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-summary col-lg-4 col-md-4">
+			<div class="row">
+				<img src="sample/pic/p03-016.png" class="img-rounded" style="width:100%; height:100%;" alt="">
+			</div>
+			<div class="row">
+				
+				<div class="well">Ability</div>
+			</div>
+		</div>
+
+
+
+		<div class="main-details col-lg-5 col-md-4">
+			<div class="panel">
+				<div class="panel-body">
+					<div class="row">
+						<h3>
+							<span class="label label-default">蓝</span>
+							<span class="label label-default">B01-37</span>
+							<span class="label label-default">SR</span>
+							<span class="label label-default">战斗土匪</span>
+							<span class="label label-default">Z/x</span>
+						</h3>
+
+					</div>
+					<div class="row"></div>
+					<div class="row"></div>
+					<div class="row"></div>
+					<div class="row"></div>
+					<div class="row">			
+						<img src="sample/pic/p03-014.png" class="img-rounded" style="width:100%; height:100%;" alt="">
 					</div>
 				</div>
 			</div>
-			
-		</div>
-
-
-		<div class="row">
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-			<div class="col-lg-1">1</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-8">8</div>
-			<div class="col-lg-4">4</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-4">4</div>
-			<div class="col-lg-4">4</div>
-			<div class="col-lg-4">4</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6">6</div>
-			<div class="col-lg-6">6</div>
 		</div>
 	</div>
+
+
 
 </body>
 </html>
