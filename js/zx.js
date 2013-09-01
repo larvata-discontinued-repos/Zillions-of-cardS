@@ -153,7 +153,7 @@ RenderCardInfo = function(id) {
   $(".main-filter-result a.actived").removeClass("actived");
   $(".main-filter-result a[data-id=" + id + "]").addClass("actived");
   $(".card-summary-image").css("background-image", "url(images/card-img/" + dbFiltered[id].SerialNo + ".png)");
-  $(".card-summary-illustrator").text(dbFiltered[id].Painter);
+  $(".card-summary-illustrator").text(dbFiltered[id].Illustrator);
   card_tags_container = $(".card-detail-tags");
   card_tags_container.children().remove();
   card_tags_container.append("<span class='label label-default'>" + dbFiltered[id].CardColor_Ch + "</span>");
