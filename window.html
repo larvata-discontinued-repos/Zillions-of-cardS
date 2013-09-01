@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/zx.js"></script>
+
+    <style>
+
+        .row {
+            margin: 0 0 10px 0;
+        }
+
+        .label{
+            font-size: 100%;
+            margin:0 0 0 5px;
+        }
+
+        .container{
+            height: 495px;
+        }
+
+        .zx-panel-filter{
+            height: 100%;
+        }
+        .zx-panel-filter .panel{
+            height: 100%;
+        }
+
+        textarea[readonly]{
+            background-color: white !important;
+            cursor: default !important;
+        }
+
+        .main-card-summary{
+            height: 100%;
+
+            border-width: 1px ;
+            border-style: solid;
+            border-color: #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .main-card-summary .card-summary-image{
+            width: 253px;
+            height: 353px;
+            background-size: 100% 100%;
+        }
+
+        .main-card-detail{
+            border:solid #ccc;
+            border-width: 1px;
+            height: 100%;
+
+            border-width:1px 1px 1px 0;
+            border-style:solid;
+            border-color:#ccc;
+        }
+        .main-card-detail .row{
+            text-align:center;
+        }
+
+        .main-filter-result{
+            overflow: hidden;
+            overflow-y:auto;
+            height: 100%;
+
+            border-width:1px 1px 1px 0;
+            border-style:solid;
+            border-color:#ccc;
+            border-radius: 0 4px 4px 0;
+
+            padding: 5px;
+        }
+
+        .main-filter-result a.actived{
+            background-color: lightblue;
+        }
+
+        .main-filter-result a{
+            cursor: pointer;
+        }
+
+        .zx-tab-pages{
+            height: 150px;
+
+            border-width: 0px 1px 1px 1px;
+            border-style:solid;
+            border-color: #ccc;
+            border-radius: 0 0 4px 4px;
+        }
+
+/*        @media (max-width: 991px) {
+            .main-card-summary{
+                float: left ;
+            }
+            .main-card-detail{
+                float: right;
+            }
+
+            .card-info{
+                float:right;
+            }
+            .main-filter-result{
+                float: left;
+            }
+
+            .zx-panel-filter{
+                float: left;
+            }
+
+
+        }*/
+
+    </style>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Zillions of cardS</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">About</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Load Db...</a></li>
+              <li><a href="#">Save Db As...</a></li>
+              <li role="presentation" class="divider"></li>
+              <li><a href="#">Z/X Offical Site</a></li>
+            </ul>
+          </li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">English</a></li>
+              <li><a href="#">Chinese</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+
+    <!-- main-container -->
+    <div class="container">
+
+        <!-- main-left -->
+        <div class="col-lg-3 col-md-4 zx-panel-filter">
+            <div class="panel" style="background-color:#f7f5fa;">
+                <div class="panel-body">
+                    <div class="row">
+                        <form action="" class="form-inline">
+                            <div class="form-group" style="width:68%;">
+                                <input type="text" class="form-control filter-keyword" id="inputKeyword" placeholder="Keyword">
+                            </div>
+                            <div class="form-group" style="width:30%;">
+                                <button type="button" class="btn btn-default btn-reset">Reset</button>
+                            </div>
+                        </form>
+                       
+                    </div>
+                    <div class="row">
+                        <select class="form-control filter-types" id="selectType">
+                            <option>Z/X卡</option>
+                            <option>事件卡</option>
+                            <option>玩家卡</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="btn-group filter-colors" id="btngrpColor" data-toggle="buttons">
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> Red
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> Blue
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> White
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> Black
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> Green
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> Other
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form action="" class="form-inline">
+                            <div class="form-group" style="width:59%;">
+                                <select class="form-control filter-costs" id="selectCostValue" >
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="width:39%;">
+                                <select class="form-control filter-cost-method" id="selectCostMethod">
+                                    <option>(All)</option>
+                                    <option>></option>
+                                    <option>=</option>
+                                    <option><</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <from class="form-inline">
+                            <div class="form-group" style="width:59%;">
+                                <select class="form-control filter-powers" id="selectPowerValue">
+                                    <option data-start="500" data-end="11000" data-step="500">500</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="width:39%;">
+                                <select class="form-control filter-power-method" id="selectPowerMethod">
+                                    <option>(All)</option>
+                                    <option>></option>
+                                    <option>=</option>
+                                    <option><</option>
+                                </select>
+                            </div>
+                        </from>
+                    </div>
+
+                    <div class="row">
+                        <select class="form-control filter-icons" id="selectMark">
+                            <option>burning</option>
+                            <option>awakening</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <select class="form-control filter-races" id="selectRace">
+                            <option>勇者</option>
+                            <option>巨兽</option>
+                        </select>
+
+                    </div>
+
+                    <div class="row">
+                        <select class="form-control filter-cardsets" id="selectSet">
+                            <option>B01「邂逅异世界」</option>
+                            <option>B02「巨神的咆哮」</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <select class="form-control filter-rarities" id="selectRarity">
+                            <option>CVR</option>
+                            <option>IGR</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="btn-group filter-tags" id="btngrpTag" data-toggle="buttons">
+                            <label class="btn btn-primary  btn-xs">
+                                <input type="checkbox"> 生命恢复
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> 虚空使者
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> 起始卡
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> 范围2
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> 范围∞
+                            </label>
+                            <label class="btn btn-primary btn-xs">
+                                <input type="checkbox"> 绝界
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- main-center -->
+
+
+                <div class="main-card-summary col-lg-3 col-md-3">
+                    <div class="row"></div>
+                    <div class="row">
+                        <div class="img-rounded card-summary-image"></div>
+                    </div>
+
+                    <div class="row">
+                        <select class="form-control">
+                            <option value="">B01-31</option>
+                            <option value="">B01-32</option>
+                            <option value="">B01-33</option>
+                        </select>
+                    </div>
+                    <div class="row" style="text-align:right;">
+                        <span class="label label-default card-summary-illustrator">萩谷薫/工画堂スタジオ</span>
+                    </div>
+                </div>
+
+                <!-- main-detail  -->
+                <div class="main-card-detail col-lg-4 col-md-3">
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row card-detail-tags">
+                    
+                        <span class="label label-default">蓝</span>
+                        <span class="label label-default">B01-37</span>
+                        <span class="label label-default">SR</span>
+                        <span class="label label-default">战斗土匪</span>
+                        <span class="label label-default">Z/x</span>
+                    
+                    </div>
+                    <div class="row">
+                        <span class="card-detail-cardname-ch">狙击之剑 莉洁尔</span>
+                    </div>
+                    <div class="row">
+                        <span class="card-detail-cardname-jp">ソードスナイパー　リゲル</span>
+                    </div>
+                    <div class="row">
+                        <span>cost:</span><span class="card-detail-cost">5</span>
+                        <span>pow:</span><span class="card-detail-power">6000</span>
+                        <span>tag:</span><span class="card-detail-tag">-</span>
+                    </div>
+                    <div class="row">
+                        <textarea class="form-control card-detail-ability-ch" rows="6" readonly="readonly">【常】虚空使者（这张卡从生命区登场时，你的生命在对手的生命以下的话，可以选择方阵上的1张Z/X，放置到废弃区。）</textarea>
+                    </div>
+                    <div class="row">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#">Desc.</a></li>
+                          <li><a href="#">Cmt.</a></li>
+                          <li><a href="#">Offi.</a></li>
+                        </ul>
+                        <div class="zx-tab-pages"></div>
+                    </div>
+                </div>
+
+            <style>
+                .main-filter-result a {
+                    display: block;
+                }
+            </style>
+            <!-- filter result -->
+            <div class="main-filter-result col-lg-2 col-md-2" style="height:100%;">
+                <a href=""><span class="">黑崎神门</span></a>
+                <a href=""><span class="">各务原安昙</span></a>
+                <a href=""><span class="">天王寺飞鸟</span></a>
+                <a href=""><span class="">上柚木绫濑</span></a>
+                <a href=""><span class="">青叶千岁</span></a>
+                <a href=""><span class="">夜之魔人 库勒普丝</span></a>
+                <a href=""><span class="">弦奏 萨莉艾尔</span></a>
+                <a href=""><span class="">红莲咆哮</span></a>
+
+                <a href=""><span class="">黑崎神门</span></a>
+                <a href=""><span class="">各务原安昙</span></a>
+                <a href=""><span class="">天王寺飞鸟</span></a>
+                <a href=""><span class="">上柚木绫濑</span></a>
+                <a href=""><span class="">青叶千岁</span></a>
+                <a href=""><span class="">夜之魔人 库勒普丝</span></a>
+                <a href=""><span class="">弦奏 萨莉艾尔</span></a>
+                <a href=""><span class="">红莲咆哮</span></a>
+
+                <a href=""><span class="">黑崎神门</span></a>
+                <a href=""><span class="">各务原安昙</span></a>
+                <a href=""><span class="">天王寺飞鸟</span></a>
+                <a href=""><span class="">上柚木绫濑</span></a>
+                <a href=""><span class="">青叶千岁</span></a>
+                <a href=""><span class="">夜之魔人 库勒普丝</span></a>
+                <a href=""><span class="">弦奏 萨莉艾尔</span></a>
+                <a href=""><span class="">红莲咆哮</span></a>
+
+                <a href=""><span class="">黑崎神门</span></a>
+                <a href=""><span class="">各务原安昙</span></a>
+                <a href=""><span class="">天王寺飞鸟</span></a>
+                <a href=""><span class="">上柚木绫濑</span></a>
+                <a href=""><span class="">青叶千岁</span></a>
+                <a href=""><span class="">夜之魔人 库勒普丝</span></a>
+                <a href=""><span class="">弦奏 萨莉艾尔</span></a>
+                <a href=""><span class="">红莲咆哮</span></a>
+
+                <a href=""><span class="">黑崎神门</span></a>
+                <a href=""><span class="">各务原安昙</span></a>
+                <a href=""><span class="">天王寺飞鸟</span></a>
+                <a href=""><span class="">上柚木绫濑</span></a>
+                <a href=""><span class="">青叶千岁</span></a>
+                <a href=""><span class="">夜之魔人 库勒普丝</span></a>
+                <a href=""><span class="">弦奏 萨莉艾尔</span></a>
+                <a href=""><span class="">红莲咆哮</span></a>
+
+                <a href=""><span class="">黑崎神门</span></a>
+                <a href=""><span class="">各务原安昙</span></a>
+                <a href=""><span class="">天王寺飞鸟</span></a>
+                <a href=""><span class="">上柚木绫濑</span></a>
+                <a href=""><span class="">青叶千岁</span></a>
+                <a href=""><span class="">夜之魔人 库勒普丝</span></a>
+                <a href=""><span class="">弦奏 萨莉艾尔</span></a>
+                <a href=""><span class="">红莲咆哮</span></a>
+
+                <a href=""><span class="">黑崎神门</span></a>
+                <a href=""><span class="">各务原安昙</span></a>
+                <a href=""><span class="">天王寺飞鸟</span></a>
+                <a href=""><span class="">上柚木绫濑</span></a>
+                <a href=""><span class="">青叶千岁</span></a>
+                <a href=""><span class="">夜之魔人 库勒普丝</span></a>
+                <a href=""><span class="">弦奏 萨莉艾尔</span></a>
+                <a href=""><span class="">红莲咆哮</span></a>
+            </div>
+
+
+    </div>
+</body>
+</html>
