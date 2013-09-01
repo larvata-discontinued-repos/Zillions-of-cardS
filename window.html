@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/bootstrap.min.js"></script>
+    <script src="db/abcout.js"></script>
     <script src="js/zx.js"></script>
 
     <style>
@@ -51,6 +52,12 @@
             height: 353px;
             background-size: 100% 100%;
         }
+        .main-card-summary .card-summary-dummyImg{
+            width: 253px;
+            height: 353px;
+            background-size: 100% 100%;
+            background-image: url(images/card-img/058-1.jpg);
+        }
 
         .main-card-detail{
             border:solid #ccc;
@@ -93,6 +100,18 @@
             border-style:solid;
             border-color: #ccc;
             border-radius: 0 0 4px 4px;
+
+        }
+        .zx-tab-pages div{
+            width: 100%;
+            height: 100%;
+        }
+
+        .zx-tab-pages textarea{
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 5px 0 0 5px;
         }
 
 /*        @media (max-width: 991px) {
@@ -311,7 +330,10 @@
                 <div class="main-card-summary col-lg-3 col-md-3">
                     <div class="row"></div>
                     <div class="row">
-                        <div class="img-rounded card-summary-image"></div>
+                        <div class="card-summary-dummyImg">
+                            <div class="img-rounded card-summary-image"></div>
+                        </div>
+                        
                     </div>
 
                     <div class="row">
@@ -348,18 +370,28 @@
                     <div class="row">
                         <span>cost:</span><span class="card-detail-cost">5</span>
                         <span>pow:</span><span class="card-detail-power">6000</span>
-                        <span>tag:</span><span class="card-detail-tag">-</span>
+                        <span>icon:</span><span class="card-detail-icon">-</span>
                     </div>
                     <div class="row">
                         <textarea class="form-control card-detail-ability-ch" rows="6" readonly="readonly">【常】虚空使者（这张卡从生命区登场时，你的生命在对手的生命以下的话，可以选择方阵上的1张Z/X，放置到废弃区。）</textarea>
                     </div>
                     <div class="row">
-                        <ul class="nav nav-tabs">
-                          <li class="active"><a href="#">Desc.</a></li>
-                          <li><a href="#">Cmt.</a></li>
-                          <li><a href="#">Offi.</a></li>
+                        <ul class="nav nav-tabs zx-card-tabs">
+                          <li class="active" data-tab="desc"><a href="#">Desc.</a></li>
+                          <li data-tab="neta"><a href="#">Net.</a></li>
+                          <li data-tab="ruling"><a href="#">Rul.</a></li>
                         </ul>
-                        <div class="zx-tab-pages"></div>
+                        <div class="zx-tab-pages">
+                            <div class="card-description" data-tab="desc">
+                                <textarea name="" id=""></textarea>
+                            </div>
+                            <div class="card-neta" data-tab="neta" style="display:none;">
+                                <textarea name="" id=""></textarea>
+                            </div>
+                            <div class="card-ruling" data-tab="ruling" style="display:none;">
+                                <textarea name="" id=""></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
