@@ -34,6 +34,8 @@ RenderFilterOptions = function() {
   });
   if (cardCostList.length < 1) {
     $(".filter-cost-method").prop("disabled", true);
+  } else {
+    $(".filter-costs").prepend("<option value=''>(全部费用)</option>");
   }
   cardPowerList = _.chain(dbMain).pluck("Power").uniq().compact().without("-").value().sort();
   $(".filter-powers").children().remove();
@@ -42,6 +44,8 @@ RenderFilterOptions = function() {
   });
   if (cardPowerList.length < 1) {
     $(".filter-power-method").prop("disabled", true);
+  } else {
+    $(".filter-powers").prepend("<option value=''>(全部力量)</option>");
   }
   cardIconList = _.chain(dbMain).pluck("Icon").uniq().compact().without("-").value();
   $(".filter-icons").children().remove();
@@ -51,7 +55,7 @@ RenderFilterOptions = function() {
   if (cardIconList.length < 1) {
     $(".filter-icons").prop("disabled", true);
   } else {
-    $(".filter-icons").prepend("<option value=''>(All)</option>");
+    $(".filter-icons").prepend("<option value=''>(全部标记)</option>");
   }
   cardRaceList = _.chain(dbMain).pluck("Race").uniq().compact().without("-").value();
   $(".filter-races").children().remove();
@@ -61,7 +65,7 @@ RenderFilterOptions = function() {
   if (cardRaceList.length < 1) {
     $(".filter-races").prop("disabled", true);
   } else {
-    $(".filter-races").prepend("<option value=''>(All)</option>");
+    $(".filter-races").prepend("<option value=''>(全部种族)</option>");
   }
   cardSetList = _.chain(dbMain).pluck("CardSet").uniq().compact().without("-").value();
   $(".filter-cardsets").children().remove();
@@ -71,7 +75,7 @@ RenderFilterOptions = function() {
   if (cardSetList.length < 1) {
     $(".filter-cardsets").prop("disabled", true);
   } else {
-    $(".filter-cardsets").prepend("<option value=''>(All)</option>");
+    $(".filter-cardsets").prepend("<option value=''>(全部卡包)</option>");
   }
   cardRarityList = _.chain(dbMain).pluck("Rarity").uniq().compact().without("-").value();
   $(".filter-rarities").children().remove();
@@ -81,7 +85,7 @@ RenderFilterOptions = function() {
   if (cardRarityList.length < 1) {
     $(".filter-rarities").prop("disabled", true);
   } else {
-    $(".filter-rarities").prepend("<option value=''>(All)</option>");
+    $(".filter-rarities").prepend("<option value=''>(全部罕贵度)</option>");
   }
   cardTagList = _.chain(dbMain).pluck("Tag").uniq().compact().without("-").value();
   $(".filter-tags").children().remove();
@@ -178,6 +182,8 @@ ResetFilters = function() {
   $(".filter-colors label").addClass("active");
   $(".filter-colors input").prop("checked", true);
   $(".filter-cost-method option:first-child").prop("selected", true);
+  $(".filter-costs option:first-child").prop("selected", true);
+  $(".filter-powers option:first-child").prop("selected", true);
   $(".filter-power-method option:first-child").prop("selected", true);
   $(".filter-icons option:first-child").prop("selected", true);
   $(".filter-races option:first-child").prop("selected", true);

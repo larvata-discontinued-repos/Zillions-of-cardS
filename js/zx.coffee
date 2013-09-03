@@ -35,14 +35,20 @@ RenderFilterOptions = ->
     $(".filter-costs").children().remove()
     _.each cardCostList,(cost)->
         $(".filter-costs").append("<option>#{cost}</option>")
-    $(".filter-cost-method").prop("disabled",true) if cardCostList.length < 1
+    if cardCostList.length < 1
+        $(".filter-cost-method").prop("disabled",true) 
+    else
+        $(".filter-costs").prepend("<option value=''>(全部费用)</option>")
 
     # 力量
     cardPowerList=_.chain(dbMain).pluck("Power").uniq().compact().without("-").value().sort()
     $(".filter-powers").children().remove()
     _.each cardPowerList,(power)->
         $(".filter-powers").append("<option>#{power}</option>")
-    $(".filter-power-method").prop("disabled",true) if cardPowerList.length < 1
+    if cardPowerList.length < 1
+        $(".filter-power-method").prop("disabled",true) 
+    else
+        $(".filter-powers").prepend("<option value=''>(全部力量)</option>")
 
     # 标记
     cardIconList=_.chain(dbMain).pluck("Icon").uniq().compact().without("-").value()
@@ -52,7 +58,7 @@ RenderFilterOptions = ->
     if cardIconList.length < 1
         $(".filter-icons").prop("disabled",true) 
     else
-        $(".filter-icons").prepend("<option value=''>(All)</option>")
+        $(".filter-icons").prepend("<option value=''>(全部标记)</option>")
     
     # 种族
     cardRaceList=_.chain(dbMain).pluck("Race").uniq().compact().without("-").value()
@@ -62,7 +68,7 @@ RenderFilterOptions = ->
     if cardRaceList.length < 1
         $(".filter-races").prop("disabled",true) 
     else
-        $(".filter-races").prepend("<option value=''>(All)</option>")
+        $(".filter-races").prepend("<option value=''>(全部种族)</option>")
 
     # 卡包
     cardSetList=_.chain(dbMain).pluck("CardSet").uniq().compact().without("-").value()
@@ -72,7 +78,7 @@ RenderFilterOptions = ->
     if cardSetList.length < 1
         $(".filter-cardsets").prop("disabled",true) 
     else
-        $(".filter-cardsets").prepend("<option value=''>(All)</option>")
+        $(".filter-cardsets").prepend("<option value=''>(全部卡包)</option>")
 
     # 罕贵度
     cardRarityList=_.chain(dbMain).pluck("Rarity").uniq().compact().without("-").value()
@@ -82,7 +88,7 @@ RenderFilterOptions = ->
     if cardRarityList.length < 1
         $(".filter-rarities").prop("disabled",true) 
     else
-        $(".filter-rarities").prepend("<option value=''>(All)</option>")
+        $(".filter-rarities").prepend("<option value=''>(全部罕贵度)</option>")
 
     # 效果分类
     cardTagList=_.chain(dbMain).pluck("Tag").uniq().compact().without("-").value()
@@ -178,6 +184,8 @@ ResetFilters = () ->
     $(".filter-colors label").addClass("active")
     $(".filter-colors input").prop("checked",true)
     $(".filter-cost-method option:first-child").prop("selected",true)
+    $(".filter-costs option:first-child").prop("selected",true)
+    $(".filter-powers option:first-child").prop("selected",true)
     $(".filter-power-method option:first-child").prop("selected",true)
     $(".filter-icons option:first-child").prop("selected",true)
     $(".filter-races option:first-child").prop("selected",true) 
