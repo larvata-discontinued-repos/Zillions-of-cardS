@@ -24,4 +24,8 @@ TODO:
     属性名name*=>cardname* 1
     属性名Flag=>tag 1
     属性名str=>Power 1
-    属性名cardpackname=cardset
+    属性名cardpackname=cardset 1
+
+整理样式->less
+添加图标 颜色 标记
+
