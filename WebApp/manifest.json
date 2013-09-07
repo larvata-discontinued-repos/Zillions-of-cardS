@@ -1,0 +1,14 @@
+{
+  "name": "Zillions-of-cardS",
+  "description": "card viewer demo",
+  "version": "0.1",
+   "icons": {
+    "128": "images/ZOS.png"
+  },
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions":[]
+}
