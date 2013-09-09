@@ -192,15 +192,40 @@ RenderMain = function(t) {
 };
 
 RenderCardInfo = function(id) {
-  var card_tags_container;
+  var card_tags_container, classSuffix;
   $(".main-filter-result a.actived").removeClass("actived");
   $(".main-filter-result a[data-id=" + id + "]").addClass("actived");
   $(".card-summary-image").css("background-image", "url(images/card-img/" + (dbZXCard[id].SerialNo + dbZXCard[id].Img_Suffix) + ".png)");
   $(".card-summary-illustrator").text(dbZXCard[id].Illustrator);
   $(".card-summary-details").data("card-name-jp", dbZXCard[id].CardName_Jp);
+  $(".main-card-detail").attr("class", "main-card-detail col-lg-4 col-md-3");
+  classSuffix = "";
+  switch (dbZXCard[id].CardColor_Ch) {
+    case "蓝":
+      classSuffix = "blue";
+      break;
+    case "白":
+      classSuffix = "white";
+      break;
+    case "黑":
+      classSuffix = "black";
+      break;
+    case "绿":
+      classSuffix = "green";
+      break;
+    case "红":
+      classSuffix = "red";
+      break;
+    case "无":
+      classSuffix = "mu";
+      break;
+    case "龙":
+      classSuffix = "dragon";
+  }
+  $(".main-card-detail").addClass("card-color-" + classSuffix);
   card_tags_container = $(".card-detail-tags");
   card_tags_container.children().remove();
-  card_tags_container.append("<span class='label label-default'>" + dbZXCard[id].CardColor_Ch + "</span>");
+  card_tags_container.append("<span class='icon'></span>");
   card_tags_container.append("<span class='label label-default'>" + dbZXCard[id].SerialNo + "</span>");
   card_tags_container.append("<span class='label label-default'>" + dbZXCard[id].Rarity + "</span>");
   card_tags_container.append("<span class='label label-default'>" + dbZXCard[id].Race + "</span>");
@@ -209,7 +234,6 @@ RenderCardInfo = function(id) {
   $(".card-detail-cardname-jp").text(dbZXCard[id].CardName_Jp);
   $(".card-detail-cost").text(dbZXCard[id].Cost);
   $(".card-detail-power").text(dbZXCard[id].Power);
-  $(".card-detail-icon").text(dbZXCard[id].Icon);
   $(".card-detail-ability-ch").text(dbZXCard[id].Ability_Ch);
   $(".card-description textarea").text(dbZXCard[id].Description_Ch);
   $(".card-neta textarea").text(dbZXCard[id].Neta);
@@ -218,7 +242,7 @@ RenderCardInfo = function(id) {
 
 ResetFilters = function() {
   $(".filter-keyword").val("");
-  $(".filter-types option:first-child").select();
+  $(".filter-types option:first-child").prop("selected", true);
   $(".filter-cost-method option:first-child").prop("selected", true);
   $(".filter-costs option:first-child").prop("selected", true);
   $(".filter-powers option:first-child").prop("selected", true);
@@ -235,15 +259,6 @@ ResetFilters = function() {
 FilterCards = function() {
   var cardset, color, cost, icon, keyword, opt, power, race, rarity, tags, tmpUniqLst, type;
   dbFiltered = dbZXCard;
-  tmpUniqLst = cardNameUniqList;
-  dbFiltered = _.filter(dbFiltered, function(obj) {
-    if (_.contains(tmpUniqLst, obj.CardName_Ch)) {
-      tmpUniqLst = _.without(tmpUniqLst, obj.CardName_Ch);
-      return true;
-    } else {
-      return false;
-    }
-  });
   keyword = $(".filter-keyword").val();
   type = $(".filter-types").val();
   color = _.pluck($(".filter-colors input:checked"), "value");
@@ -354,5 +369,14 @@ FilterCards = function() {
       }
     });
   }
+  tmpUniqLst = cardNameUniqList;
+  dbFiltered = _.filter(dbFiltered, function(obj) {
+    if (_.contains(tmpUniqLst, obj.CardName_Ch)) {
+      tmpUniqLst = _.without(tmpUniqLst, obj.CardName_Ch);
+      return true;
+    } else {
+      return false;
+    }
+  });
   RenderMain();
 };

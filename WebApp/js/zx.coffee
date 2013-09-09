@@ -196,10 +196,32 @@ RenderCardInfo = (id)->
     $(".card-summary-image").css("background-image","url(images/card-img/#{dbZXCard[id].SerialNo+dbZXCard[id].Img_Suffix}.png)")
     $(".card-summary-illustrator").text(dbZXCard[id].Illustrator)
     $(".card-summary-details").data("card-name-jp",dbZXCard[id].CardName_Jp)
-        
+    
+    # reset container class
+    $(".main-card-detail").attr("class","main-card-detail col-lg-4 col-md-3")
+    # set class by color
+    # 蓝|blue", "白|white", "黑|black", "绿|green","红|red","无|mu","龙|dragon
+    classSuffix = ""
+    switch dbZXCard[id].CardColor_Ch
+        when "蓝"
+            classSuffix = "blue"
+        when "白"
+            classSuffix = "white"
+        when "黑"
+            classSuffix = "black"
+        when "绿"
+            classSuffix = "green"
+        when "红"
+            classSuffix = "red"
+        when "无"
+            classSuffix = "mu"
+        when "龙"
+            classSuffix = "dragon"
+    $(".main-card-detail").addClass("card-color-#{classSuffix}")
+
     card_tags_container=$(".card-detail-tags")
     card_tags_container.children().remove()
-    card_tags_container.append("<span class='label label-default'>#{dbZXCard[id].CardColor_Ch}</span>")
+    card_tags_container.append("<span class='icon'></span>")
     card_tags_container.append("<span class='label label-default'>#{dbZXCard[id].SerialNo}</span>")
     card_tags_container.append("<span class='label label-default'>#{dbZXCard[id].Rarity}</span>")
     card_tags_container.append("<span class='label label-default'>#{dbZXCard[id].Race}</span>")
@@ -208,7 +230,7 @@ RenderCardInfo = (id)->
     $(".card-detail-cardname-jp").text(dbZXCard[id].CardName_Jp)
     $(".card-detail-cost").text(dbZXCard[id].Cost)
     $(".card-detail-power").text(dbZXCard[id].Power)
-    $(".card-detail-icon").text(dbZXCard[id].Icon)
+    # $(".card-detail-icon").text(dbZXCard[id].Icon)
     $(".card-detail-ability-ch").text(dbZXCard[id].Ability_Ch)
     $(".card-description textarea").text(dbZXCard[id].Description_Ch)
     $(".card-neta textarea").text(dbZXCard[id].Neta)
@@ -217,7 +239,7 @@ RenderCardInfo = (id)->
 
 ResetFilters = () ->
     $(".filter-keyword").val("")
-    $(".filter-types option:first-child").select()
+    $(".filter-types option:first-child").prop("selected",true)
     $(".filter-cost-method option:first-child").prop("selected",true)
     $(".filter-costs option:first-child").prop("selected",true)
     $(".filter-powers option:first-child").prop("selected",true)
@@ -232,15 +254,6 @@ ResetFilters = () ->
 
 FilterCards = () ->
     dbFiltered = dbZXCard
-
-    # filter card info with same serialNo
-    tmpUniqLst = cardNameUniqList
-    dbFiltered = _.filter dbFiltered, (obj)->
-        if _.contains tmpUniqLst,obj.CardName_Ch
-            tmpUniqLst = _.without tmpUniqLst,obj.CardName_Ch
-            true
-        else
-            false
 
     keyword = $(".filter-keyword").val()
     type = $(".filter-types").val()    
@@ -328,6 +341,15 @@ FilterCards = () ->
                     obj.Power == power
                 when "<"
                     obj.Power < power
+
+    # filter card info with same serialNo
+    tmpUniqLst = cardNameUniqList
+    dbFiltered = _.filter dbFiltered, (obj)->
+        if _.contains tmpUniqLst,obj.CardName_Ch
+            tmpUniqLst = _.without tmpUniqLst,obj.CardName_Ch
+            true
+        else
+            false
             
     RenderMain()
     return

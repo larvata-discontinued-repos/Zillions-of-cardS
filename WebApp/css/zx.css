@@ -6,13 +6,20 @@ textarea[readonly]{background-color:#fff !important;cursor:default !important}
 .main-card-summary{height:100%;border-width:1px;border-style:solid;border-color:#ccc;border-radius:4px 0 0 4px}.main-card-summary .card-summary-image{width:253px;height:353px;background-size:100% 100%}
 .main-card-summary .card-summary-dummyImg{width:253px;height:353px;background-size:100% 100%;background-image:url(images/card-img/058-1.jpg)}
 .main-card-detail{border:solid #ccc;border-width:1px;height:100%;border-width:1px 1px 1px 0;border-style:solid;border-color:#ccc}.main-card-detail .row{text-align:center}
+.main-card-detail .icon{width:16px;height:16px;display:inline-block;background-repeat:no-repeat}
+.main-card-detail .icon-ig{width:21px;height:29px;display:inline-block;background-size:100%}
 .main-card-detail .zx-tab-pages{height:150px;border-width:0 1px 1px 1px;border-style:solid;border-color:#ccc;border-radius:0 0 4px 4px}.main-card-detail .zx-tab-pages div{width:100%;height:100%}
 .main-card-detail .zx-tab-pages textarea{width:100%;height:100%;border:none;padding:5px 0 0 5px}
 .main-filter-result{overflow:hidden;overflow-y:auto;height:100%;border-width:1px 1px 1px 0;border-style:solid;border-color:#ccc;border-radius:0 4px 4px 0;padding:5px}.main-filter-result a.actived{background-color:#add8e6}
 .main-filter-result a{display:block;cursor:pointer}
-.icon-es{background-image:url(images/icons/es.png)}
-.card-color-blue .icon-ig{background-image:url(images/icons/ig_blue.png)}
-.card-color-white .icon-ig{background-image:url(images/icons/ig_white.png)}
-.card-color-black .icon-ig{background-image:url(images/icons/ig_black.png)}
-.card-color-green .icon-ig{background-image:url(images/icons/ig_green.png)}
-.card-color-red .icon-ig{background-image:url(images/icons/ig_red.png)}
+.icon-es{background-image:url(../images/icons/es.png)}
+.card-color-blue .icon{background-image:url(../images/icons/ico_blue.png)}
+.card-color-blue .icon-ig{background-image:url(../images/icons/ig_blue.png)}
+.card-color-white .icon{background-image:url(../images/icons/ico_white.png)}
+.card-color-white .icon-ig{background-image:url(../images/icons/ig_white.png)}
+.card-color-black .icon{background-image:url(../images/icons/ico_black.png)}
+.card-color-black .icon-ig{background-image:url(../images/icons/ig_black.png)}
+.card-color-green .icon{background-image:url(../images/icons/ico_green.png)}
+.card-color-green .icon-ig{background-image:url(../images/icons/ig_green.png)}
+.card-color-red .icon{background-image:url(../images/icons/ico_red.png)}
+.card-color-red .icon-ig{background-image:url(../images/icons/ig_red.png)}
