@@ -1,5 +1,153 @@
 @container-width: 1170px;
 
-.container{
-	max-width: @container-width;
+.row {
+    margin: 0 0 10px 0;
 }
+
+.label{
+    font-size: 100%;
+    margin:0 0 0 5px;
+}
+
+.container{
+	height: 495px;
+    max-width: @container-width;
+}
+
+textarea[readonly]{
+    background-color: white !important;
+    cursor: default !important;
+}
+
+.zx-panel-filter{
+    height: 100%;
+    .panel{
+        height: 100%;
+    }
+}
+
+.main-card-summary{
+    height: 100%;
+
+    border-width: 1px ;
+    border-style: solid;
+    border-color: #ccc;
+    border-radius: 4px 0 0 4px;
+    
+    .card-summary-image{
+        width: 253px;
+        height: 353px;
+        background-size: 100% 100%;
+    }
+    .card-summary-dummyImg{
+        width: 253px;
+        height: 353px;
+        background-size: 100% 100%;
+        background-image: url(images/card-img/058-1.jpg);
+    }
+}
+
+.main-card-detail{
+    border:solid #ccc;
+    border-width: 1px;
+    height: 100%;
+
+    border-width:1px 1px 1px 0;
+    border-style:solid;
+    border-color:#ccc;
+
+    .row{
+        text-align:center;
+    }
+
+    .zx-tab-pages{
+        height: 150px;
+        border-width: 0px 1px 1px 1px;
+        border-style:solid;
+        border-color: #ccc;
+        border-radius: 0 0 4px 4px;
+
+        div{
+            width: 100%;
+            height: 100%;
+        }
+
+        textarea{
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 5px 0 0 5px;
+        }
+
+    }
+}
+
+.main-filter-result{
+    overflow: hidden;
+    overflow-y:auto;
+    height: 100%;
+
+    border-width:1px 1px 1px 0;
+    border-style:solid;
+    border-color:#ccc;
+    border-radius: 0 4px 4px 0;
+
+    padding: 5px;
+
+    a.actived{
+        background-color: lightblue;
+    }
+
+    a{
+        display: block;
+        cursor: pointer;
+    }
+}
+
+.icon-es{
+    background-image: url(images/icons/es.png)
+}
+
+.card-color-blue{
+    .icon-ig{
+        background-image: url(images/icons/ig_blue.png)
+    }
+}
+
+.card-color-white{
+    .icon-ig{
+        background-image: url(images/icons/ig_white.png)
+    }
+}
+
+.card-color-black{
+    .icon-ig{
+        background-image: url(images/icons/ig_black.png)
+    }
+}
+
+.card-color-green{
+    .icon-ig{
+        background-image: url(images/icons/ig_green.png)
+    }
+}
+
+.card-color-red{
+    .icon-ig{
+        background-image: url(images/icons/ig_red.png)
+    }
+}
+
+.card-color-mu{
+
+}
+
+.card-color-dragon{
+    
+}
+
+
+
+
+
+
