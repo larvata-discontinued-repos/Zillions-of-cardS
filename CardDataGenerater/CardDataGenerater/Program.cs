@@ -1,4 +1,6 @@
-﻿namespace CardDataGenerater
+﻿using System.Linq;
+
+namespace CardDataGenerater
 {
     using ZxCard;
     using System;
@@ -36,7 +38,7 @@
             // output json
             if (options.OutputJSON)
             {
-                File.WriteAllText(options.OutFileName+".json", new JavaScriptSerializer().Serialize(cardInfos));
+                File.WriteAllText(options.OutFileName+".js", "var dbMain="+new JavaScriptSerializer().Serialize(cardInfos.Where(c=>c.CardName_Ch!=null).ToList()));
             }
             
             // output html
