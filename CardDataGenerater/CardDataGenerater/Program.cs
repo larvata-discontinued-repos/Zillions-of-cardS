@@ -70,8 +70,15 @@
                 {
                     using (var sw = new StreamWriter(fs, Encoding.UTF8))
                     {
+                       
                         foreach (var zx in cardInfos)
                         {
+                            if (zx.CardName_Ch==null)
+                            {
+                                // exileexcel 有个bug 会导入全null的对象
+                                continue;
+                               
+                            }
                             // 预处理
                             var flagStr = zx.Icon;
                             var flagTemplate = string.Empty;

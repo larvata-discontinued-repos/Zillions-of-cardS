@@ -26,6 +26,8 @@ textarea[readonly]{
     }
 }
 
+
+
 .main-card-summary{
     height: 100%;
 
@@ -45,6 +47,11 @@ textarea[readonly]{
         background-size: 100% 100%;
         background-image: url(images/card-img/058-1.jpg);
     }
+    .card-summary-illustrator{
+        max-width: 100%;
+        white-space: normal;
+    }
+
 }
 
 .main-card-detail{
@@ -55,6 +62,11 @@ textarea[readonly]{
     border-width:1px 1px 1px 0;
     border-style:solid;
     border-color:#ccc;
+
+    span{
+        line-height: 100%;
+        vertical-align: middle;
+    }
 
     .row{
         text-align:center;
@@ -67,7 +79,7 @@ textarea[readonly]{
         background-repeat: no-repeat;
     }
 
-    .icon-ig{
+    .card-icon{
         width: 21px;
         height: 29px;
         display: inline-block;
@@ -93,6 +105,10 @@ textarea[readonly]{
             padding: 5px 0 0 5px;
         }
 
+    }
+
+    .card-detail-fontsize-large{
+        font-size: 1.3em;
     }
 }
 
@@ -126,7 +142,7 @@ textarea[readonly]{
     .icon{
         background-image: url(../images/icons/ico_blue.png)
     }
-    .icon-ig{
+    .card-icon.icon-ig{
         background-image: url(../images/icons/ig_blue.png)
     }
 }
@@ -135,7 +151,7 @@ textarea[readonly]{
     .icon{
         background-image: url(../images/icons/ico_white.png)
     }
-    .icon-ig{
+    .card-icon.icon-ig{
         background-image: url(../images/icons/ig_white.png)
     }
 }
@@ -144,7 +160,7 @@ textarea[readonly]{
     .icon{
         background-image: url(../images/icons/ico_black.png)
     }
-    .icon-ig{
+    .card-icon.icon-ig{
         background-image: url(../images/icons/ig_black.png)
     }
 }
@@ -153,7 +169,7 @@ textarea[readonly]{
     .icon{
         background-image: url(../images/icons/ico_green.png)
     }
-    .icon-ig{
+    .card-icon.icon-ig{
         background-image: url(../images/icons/ig_green.png)
     }
 }
@@ -162,7 +178,7 @@ textarea[readonly]{
     .icon{
         background-image: url(../images/icons/ico_red.png)
     }
-    .icon-ig{
+    .card-icon.icon-ig{
         background-image: url(../images/icons/ig_red.png)
     }
 }

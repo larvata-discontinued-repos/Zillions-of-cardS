@@ -195,6 +195,9 @@ RenderCardInfo = function(id) {
   var card_tags_container, classSuffix;
   $(".main-filter-result a.actived").removeClass("actived");
   $(".main-filter-result a[data-id=" + id + "]").addClass("actived");
+  if (_.isNull(dbZXCard[id].Img_Suffix)) {
+    dbZXCard[id].Img_Suffix = "";
+  }
   $(".card-summary-image").css("background-image", "url(images/card-img/" + (dbZXCard[id].SerialNo + dbZXCard[id].Img_Suffix) + ".png)");
   $(".card-summary-illustrator").text(dbZXCard[id].Illustrator);
   $(".card-summary-details").data("card-name-jp", dbZXCard[id].CardName_Jp);
@@ -234,6 +237,13 @@ RenderCardInfo = function(id) {
   $(".card-detail-cardname-jp").text(dbZXCard[id].CardName_Jp);
   $(".card-detail-cost").text(dbZXCard[id].Cost);
   $(".card-detail-power").text(dbZXCard[id].Power);
+  $(".card-detail-icon").attr("class", "card-detail-icon card-detail-fontsize-large");
+  if (dbZXCard[id].Icon === "-") {
+    $(".card-detail-icon").text("-");
+  } else {
+    $(".card-detail-icon").addClass("card-icon ");
+    $(".card-detail-icon").addClass("icon-" + (dbZXCard[id].Icon.toLowerCase()));
+  }
   $(".card-detail-ability-ch").text(dbZXCard[id].Ability_Ch);
   $(".card-description textarea").text(dbZXCard[id].Description_Ch);
   $(".card-neta textarea").text(dbZXCard[id].Neta);

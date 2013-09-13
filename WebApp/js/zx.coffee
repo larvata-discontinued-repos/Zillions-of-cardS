@@ -101,6 +101,7 @@ RenderFilterOptions = ->
     # $(".filter-tags input").prop("checked",true)
 
 Init = () ->
+
     # get uniq serialNo from maindb
     cardNameUniqList=_.chain(dbZXCard).pluck("CardName_Ch").uniq().compact().without("-").value()
 
@@ -193,6 +194,8 @@ RenderCardInfo = (id)->
     $(".main-filter-result a.actived").removeClass("actived")
     $(".main-filter-result a[data-id=#{id}]").addClass("actived")
     # redraw card main details by card database id
+    # replace null with "" to avoid wrong pic url
+    dbZXCard[id].Img_Suffix= "" if _.isNull(dbZXCard[id].Img_Suffix)
     $(".card-summary-image").css("background-image","url(images/card-img/#{dbZXCard[id].SerialNo+dbZXCard[id].Img_Suffix}.png)")
     $(".card-summary-illustrator").text(dbZXCard[id].Illustrator)
     $(".card-summary-details").data("card-name-jp",dbZXCard[id].CardName_Jp)
@@ -230,7 +233,15 @@ RenderCardInfo = (id)->
     $(".card-detail-cardname-jp").text(dbZXCard[id].CardName_Jp)
     $(".card-detail-cost").text(dbZXCard[id].Cost)
     $(".card-detail-power").text(dbZXCard[id].Power)
-    # $(".card-detail-icon").text(dbZXCard[id].Icon)
+
+    $(".card-detail-icon").attr("class","card-detail-icon card-detail-fontsize-large")
+    if dbZXCard[id].Icon is "-"
+        $(".card-detail-icon").text("-")
+    else
+        $(".card-detail-icon").addClass("card-icon ")
+        $(".card-detail-icon").addClass("icon-#{dbZXCard[id].Icon.toLowerCase()}")
+    
+    # $(".card-detail-icon").text()
     $(".card-detail-ability-ch").text(dbZXCard[id].Ability_Ch)
     $(".card-description textarea").text(dbZXCard[id].Description_Ch)
     $(".card-neta textarea").text(dbZXCard[id].Neta)
