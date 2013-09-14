@@ -196,7 +196,7 @@ RenderMain = function(t) {
 };
 
 RenderCardInfo = function(id) {
-  var card_tags_container, classSuffix, _base, _base1;
+  var card_tags_container, classSuffix;
   $(".main-filter-result a.actived").removeClass("actived");
   $(".main-filter-result a[data-id=" + id + "]").addClass("actived");
   if (_.isNull(dbZXCard[id].Img_Suffix)) {
@@ -250,16 +250,20 @@ RenderCardInfo = function(id) {
   }
   $(".card-detail-ability-ch").text(dbZXCard[id].Ability_Ch);
   $(".card-description textarea").text(dbZXCard[id].Description_Ch);
-  $(".card-neta textarea").text(typeof (_base = _.isNull(dbZXCard[id].Neta)) === "function" ? _base({
-    "": dbZXCard[id].Neta
-  }) : void 0);
-  $(".card-ruling textarea").text(typeof (_base1 = _.isNull(dbZXCard[id].Ruling)) === "function" ? _base1({
-    "": dbZXCard[id].Ruling
-  }) : void 0);
+  if (_.isNull(dbZXCard[id].Neta)) {
+    dbZXCard[id].Neta = "";
+  }
+  $(".card-neta textarea").text(dbZXCard[id].Neta);
+  if (_.isNull(dbZXCard[id].Ruling)) {
+    dbZXCard[id].Ruling = "";
+  }
+  $(".card-ruling textarea").text(dbZXCard[id].Ruling);
 };
 
 ResetFilters = function() {
   $(".filter-keyword").val("");
+  $(".filter-colors label").removeClass("active");
+  $(".filter-colors input").prop("checked", false);
   $(".filter-types option:first-child").prop("selected", true);
   $(".filter-cost-method option:first-child").prop("selected", true);
   $(".filter-costs option:first-child").prop("selected", true);

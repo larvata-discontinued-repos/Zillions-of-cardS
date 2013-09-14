@@ -244,12 +244,16 @@ RenderCardInfo = (id)->
 
     $(".card-detail-ability-ch").text(dbZXCard[id].Ability_Ch)
     $(".card-description textarea").text(dbZXCard[id].Description_Ch)
-    $(".card-neta textarea").text(_.isNull(dbZXCard[id].Neta)?"":dbZXCard[id].Neta)
-    $(".card-ruling textarea").text(_.isNull(dbZXCard[id].Ruling)?"":dbZXCard[id].Ruling)
+    dbZXCard[id].Neta = "" if _.isNull(dbZXCard[id].Neta)
+    $(".card-neta textarea").text(dbZXCard[id].Neta)
+    dbZXCard[id].Ruling = "" if _.isNull(dbZXCard[id].Ruling)
+    $(".card-ruling textarea").text(dbZXCard[id].Ruling)
     return
 
 ResetFilters = () ->
     $(".filter-keyword").val("")
+    $(".filter-colors label").removeClass("active")
+    $(".filter-colors input").prop("checked",false)
     $(".filter-types option:first-child").prop("selected",true)
     $(".filter-cost-method option:first-child").prop("selected",true)
     $(".filter-costs option:first-child").prop("selected",true)
