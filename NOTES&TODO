@@ -26,6 +26,10 @@ TODO:
     属性名str=>Power 1
     属性名cardpackname=cardset 1
 
-整理样式->less
-添加图标 颜色 标记
+整理样式->less 1
+添加图标 颜色 标记 1
+
+初始化时整理数据库异常值 null->"" eg->tolower cost,power->(int)
+过滤面板控件数组->统一初始化
+过滤条件设置后 自动调整其他空间内可选值 ->用颜色标记不可用
 
