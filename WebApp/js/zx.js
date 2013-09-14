@@ -20,7 +20,7 @@ $(document).ready(function() {
 
 RenderFilterOptions = function() {
   var cardColorList, cardCostList, cardIconList, cardPowerList, cardRaceList, cardRarityList, cardSetList, cardTagList, cardTypeList;
-  cardTypeList = _.chain(dbZXCard).pluck("Type").uniq().compact().without("-").value();
+  cardTypeList = _.chain(dbZXCard).pluck("Type").uniq().compact().without("-").without("－").value();
   $(".filter-types").children().remove();
   _.each(cardTypeList, function(type) {
     return $(".filter-types").append("<option value='" + type + "'>" + type + "</option>");
@@ -30,12 +30,14 @@ RenderFilterOptions = function() {
   } else {
     $(".filter-types").prepend("<option value=''>(All)</option>");
   }
-  cardColorList = _.chain(dbZXCard).pluck("CardColor_Ch").uniq().compact().without("-").value();
+  cardColorList = _.chain(dbZXCard).pluck("CardColor_Ch").uniq().compact().without("-").without("－").value();
   $(".filter-colors").children().remove();
   _.each(cardColorList, function(color) {
     return $(".filter-colors").append("<label class='btn btn-primary btn-xs'><input type='checkbox' value='" + color + "'>" + color + "</label>");
   });
-  cardCostList = _.chain(dbZXCard).pluck("Cost").uniq().compact().without("-").value().sort();
+  cardCostList = _.chain(dbZXCard).pluck("Cost").uniq().compact().without("-").without("－").sortBy(function(cost) {
+    return parseInt(cost);
+  }).value();
   $(".filter-costs").children().remove();
   _.each(cardCostList, function(cost) {
     return $(".filter-costs").append("<option>" + cost + "</option>");
@@ -45,7 +47,9 @@ RenderFilterOptions = function() {
   } else {
     $(".filter-costs").prepend("<option value='-1'>(费用)</option>");
   }
-  cardPowerList = _.chain(dbZXCard).pluck("Power").uniq().compact().without("-").value().sort();
+  cardPowerList = _.chain(dbZXCard).pluck("Power").uniq().compact().without("-").without("－").sortBy(function(power) {
+    return parseInt(power);
+  }).value();
   $(".filter-powers").children().remove();
   _.each(cardPowerList, function(power) {
     return $(".filter-powers").append("<option>" + power + "</option>");
@@ -55,7 +59,7 @@ RenderFilterOptions = function() {
   } else {
     $(".filter-powers").prepend("<option value='-1'>(力量)</option>");
   }
-  cardIconList = _.chain(dbZXCard).pluck("Icon").uniq().compact().without("-").value();
+  cardIconList = _.chain(dbZXCard).pluck("Icon").uniq().compact().without("-").without("－").value();
   $(".filter-icons").children().remove();
   _.each(cardIconList, function(icon) {
     return $(".filter-icons").append("<option value='" + icon + "'>" + icon + "</option>");
@@ -65,7 +69,7 @@ RenderFilterOptions = function() {
   } else {
     $(".filter-icons").prepend("<option value=''>(标记)</option>");
   }
-  cardRaceList = _.chain(dbZXCard).pluck("Race").uniq().compact().without("-").value();
+  cardRaceList = _.chain(dbZXCard).pluck("Race").uniq().compact().without("-").without("－").value();
   $(".filter-races").children().remove();
   _.each(cardRaceList, function(race) {
     return $(".filter-races").append("<option value='" + race + "'>" + race + "</option>");
@@ -75,7 +79,7 @@ RenderFilterOptions = function() {
   } else {
     $(".filter-races").prepend("<option value=''>(种族)</option>");
   }
-  cardSetList = _.chain(dbZXCard).pluck("CardSet").uniq().compact().without("-").value();
+  cardSetList = _.chain(dbZXCard).pluck("CardSet").uniq().compact().without("-").without("－").value();
   $(".filter-cardsets").children().remove();
   _.each(cardSetList, function(set) {
     return $(".filter-cardsets").append("<option value='" + set + "'>" + set + "</option>");
@@ -85,7 +89,7 @@ RenderFilterOptions = function() {
   } else {
     $(".filter-cardsets").prepend("<option value=''>(卡包)</option>");
   }
-  cardRarityList = _.chain(dbZXCard).pluck("Rarity").uniq().compact().without("-").value();
+  cardRarityList = _.chain(dbZXCard).pluck("Rarity").uniq().compact().without("-").without("－").value();
   $(".filter-rarities").children().remove();
   _.each(cardRarityList, function(rarity) {
     return $(".filter-rarities").append("<option value='" + rarity + "'>" + rarity + "</option>");
@@ -95,7 +99,7 @@ RenderFilterOptions = function() {
   } else {
     $(".filter-rarities").prepend("<option value=''>(罕贵度)</option>");
   }
-  cardTagList = _.chain(dbZXCard).pluck("Tag").uniq().compact().without("-").value();
+  cardTagList = _.chain(dbZXCard).pluck("Tag").uniq().compact().without("-").without("－").value();
   $(".filter-tags").children().remove();
   return _.each(cardTagList, function(tag) {
     return $(".filter-tags").append("<label class='btn btn-primary btn-xs'><input type='checkbox' value='" + tag + "'>" + tag + "</label>");
@@ -103,7 +107,7 @@ RenderFilterOptions = function() {
 };
 
 Init = function() {
-  cardNameUniqList = _.chain(dbZXCard).pluck("CardName_Ch").uniq().compact().without("-").value();
+  cardNameUniqList = _.chain(dbZXCard).pluck("CardName_Ch").uniq().compact().without("-").without("－").value();
   $(".about-card-count").text(dbMain.length);
   RenderFilterOptions();
   $(".card-summary-details").click(function() {
@@ -192,7 +196,7 @@ RenderMain = function(t) {
 };
 
 RenderCardInfo = function(id) {
-  var card_tags_container, classSuffix;
+  var card_tags_container, classSuffix, _base, _base1;
   $(".main-filter-result a.actived").removeClass("actived");
   $(".main-filter-result a[data-id=" + id + "]").addClass("actived");
   if (_.isNull(dbZXCard[id].Img_Suffix)) {
@@ -238,7 +242,7 @@ RenderCardInfo = function(id) {
   $(".card-detail-cost").text(dbZXCard[id].Cost);
   $(".card-detail-power").text(dbZXCard[id].Power);
   $(".card-detail-icon").attr("class", "card-detail-icon card-detail-fontsize-large");
-  if (dbZXCard[id].Icon === "-") {
+  if (dbZXCard[id].Icon === "-" || "－") {
     $(".card-detail-icon").text("-");
   } else {
     $(".card-detail-icon").addClass("card-icon ");
@@ -246,8 +250,12 @@ RenderCardInfo = function(id) {
   }
   $(".card-detail-ability-ch").text(dbZXCard[id].Ability_Ch);
   $(".card-description textarea").text(dbZXCard[id].Description_Ch);
-  $(".card-neta textarea").text(dbZXCard[id].Neta);
-  $(".card-ruling textarea").text(dbZXCard[id].Ruling);
+  $(".card-neta textarea").text(typeof (_base = _.isNull(dbZXCard[id].Neta)) === "function" ? _base({
+    "": dbZXCard[id].Neta
+  }) : void 0);
+  $(".card-ruling textarea").text(typeof (_base1 = _.isNull(dbZXCard[id].Ruling)) === "function" ? _base1({
+    "": dbZXCard[id].Ruling
+  }) : void 0);
 };
 
 ResetFilters = function() {
@@ -350,32 +358,32 @@ FilterCards = function() {
   if (cost !== "-1") {
     opt = $(".filter-cost-method").val();
     dbFiltered = _.filter(dbFiltered, function(obj) {
-      if (obj.Cost === "-") {
+      if (obj.Cost === "-" || "－") {
         false;
       }
       switch (opt) {
         case ">":
-          return obj.Cost > cost;
+          return parseInt(obj.Cost) > parseInt(cost);
         case "=":
-          return obj.Cost === cost;
+          return parseInt(obj.Cost) === parseInt(cost);
         case "<":
-          return obj.Cost < cost;
+          return parseInt(obj.Cost) < parseInt(cost);
       }
     });
   }
   if (power !== "-1") {
     opt = $(".filter-power-method").val();
     dbFiltered = _.filter(dbFiltered, function(obj) {
-      if (obj.Power === "-") {
+      if (obj.Power === "-" || "－") {
         false;
       }
       switch (opt) {
         case ">":
-          return obj.Power > power;
+          return parseInt(obj.Power) > parseInt(power);
         case "=":
-          return obj.Power === power;
+          return parseInt(obj.Power) === parseInt(power);
         case "<":
-          return obj.Power < power;
+          return parseInt(obj.Power) < parseInt(power);
       }
     });
   }
