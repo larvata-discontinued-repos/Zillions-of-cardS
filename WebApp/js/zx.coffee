@@ -198,7 +198,7 @@ RenderCardInfo = (id)->
     dbZXCard[id].Img_Suffix= "" if _.isNull(dbZXCard[id].Img_Suffix)
     $(".card-summary-image").css("background-image","url(images/card-img/#{dbZXCard[id].SerialNo+dbZXCard[id].Img_Suffix}.png)")
     $(".card-summary-illustrator").text(dbZXCard[id].Illustrator)
-    $(".card-summary-details").data("card-name-jp",dbZXCard[id].CardName_Jp)
+    $(".card-summary-details").data("card-name-jp",dbZXCard[id].CardName_Jp.replace("“","").replace("”",""))
     
     # reset container class
     $(".main-card-detail").attr("class","main-card-detail col-lg-4 col-md-3")

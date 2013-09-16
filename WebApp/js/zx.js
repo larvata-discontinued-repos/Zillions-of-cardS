@@ -204,7 +204,7 @@ RenderCardInfo = function(id) {
   }
   $(".card-summary-image").css("background-image", "url(images/card-img/" + (dbZXCard[id].SerialNo + dbZXCard[id].Img_Suffix) + ".png)");
   $(".card-summary-illustrator").text(dbZXCard[id].Illustrator);
-  $(".card-summary-details").data("card-name-jp", dbZXCard[id].CardName_Jp);
+  $(".card-summary-details").data("card-name-jp", dbZXCard[id].CardName_Jp.replace("“", "").replace("”", ""));
   $(".main-card-detail").attr("class", "main-card-detail col-lg-4 col-md-3");
   classSuffix = "";
   switch (dbZXCard[id].CardColor_Ch) {
