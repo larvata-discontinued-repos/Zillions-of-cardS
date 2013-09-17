@@ -4,7 +4,7 @@
 textarea[readonly]{background-color:#fff !important;cursor:default !important}
 .zx-panel-filter{height:100%}.zx-panel-filter .panel{height:100%}
 .main-card-summary{height:100%;border-width:1px;border-style:solid;border-color:#ccc;border-radius:4px 0 0 4px}.main-card-summary .card-summary-image{width:253px;height:353px;background-size:100% 100%}
-.main-card-summary .card-summary-dummyImg{width:253px;height:353px;background-size:100% 100%;background-image:url(images/card-img/058-1.jpg)}
+.main-card-summary .card-summary-dummyImg{width:253px;height:353px;background-size:100% 100%;background-image:url(../images/card-img/058-1.jpg)}
 .main-card-summary .card-summary-illustrator{max-width:100%;white-space:normal}
 .main-card-detail{border:solid #ccc;border-width:1px;height:100%;border-width:1px 1px 1px 0;border-style:solid;border-color:#ccc}.main-card-detail span{line-height:100%;vertical-align:middle}
 .main-card-detail .row{text-align:center}
