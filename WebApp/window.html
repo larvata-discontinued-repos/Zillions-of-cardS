@@ -3,18 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <title>Zillions of cardS</title>
-    <script src="js/jquery-2.0.3.min.js"></script>
-    <script src="js/underscore-min.js"></script>
+    <script src="scripts/jquery-2.0.3.min.js"></script>
+    <script src="scripts/underscore-min.js"></script>
+    <script src="scripts/backbone-min.js"></script>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/zx.css">
-    <script src="js/bootstrap.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
     <script src="db/abcout.js"></script>
-    <script src="js/zx.js"></script>
+    <script src="scripts/zxcard.js"></script>
 
-    <style>
+    <script id="cardListTemplate" type="text/template">
+    <%
+    for (index in CardList){
+        if (CardList[index].Filtered===false&&CardList[index].Disabled===false) {
+            %>
+            <a data-id='<%= CardList[index].Id %>'><span><%= CardList[index].CardName_Ch %></span></a>
+            <%
+        }
+    }
+    %>
+    </script>
 
-    </style>
+    <script id="cardSummaryTemplate" type="text/template">
+        <%
+            // var Card=obj.toJSON();
+            // console.log(Card);
+        %>
+        <div class="main-card-summary col-lg-3 col-md-3">
+            <div class="row"></div>
+            <div class="row">
+                <select class="form-control card-summary-versions">
+                <%
+                for (var index in Card.Relations){
+
+                    var obj = Card.Relations[index]
+                    console.log(Card.Relations[index]);
+                    %>
+                    <option data-id="<%= obj.Id %>"><%= obj.SerialNo %> <%= obj.Version %></option>
+                    <%
+                }
+                %>
+                </select>
+            </div>
+            <div class="row">
+                <div class="card-summary-dummyImg">
+                    <div class="img-rounded card-summary-image" style="background-image: url(images/card-img/<%= Card.SerialNo+Card.Img_Suffix %>.png);">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <span class="label label-default card-summary-illustrator pull-left">
+                    <%= Card.Illustrator %>
+                </span>
+                <button type="button" class="btn btn-primary btn-xs pull-right card-summary-details">详细情报</button>
+            </div>
+            <div class="row" style="text-align:right;">
+            </div>
+        </div>
+    </script>
+
+    <script id="cardDetailsTemplate" type="text/template">
+        <%
+            // var Card=obj.toJSON();
+            // console.log(Card);
+        %>
+        <div class="main-card-detail col-lg-4 col-md-3">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row card-detail-tags" style="line-height:0px;">
+                <span class="icon"></span>
+                <span class="label label-default"><%= Card.SerialNo %></span>
+                <span class="label label-default"><%= Card.Rarity %></span>
+                <span class="label label-default"><%= Card.Race %></span>
+                <span class="label label-default"><%= Card.Type %></span>
+            </div>
+            <div class="row">
+                <span class="card-detail-cardname-ch"><%= Card.CardName_Ch %></span>
+            </div>
+            <div class="row">
+                <span class="card-detail-cardname-jp"><%= Card.CardName_Jp %></span>
+            </div>
+            <div class="row" style="line-height:32px;">
+                <span>COST:</span>
+                <span class="card-detail-cost card-detail-fontsize-large">
+                    <%= Card.Cost %>
+                </span>
+                <span>POWER:</span>
+                <span class="card-detail-power card-detail-fontsize-large">
+                    <%= Card.Power %>
+                </span>
+                <span>ICON:</span>
+                <span class="card-icon card-detail-icon card-detail-fontsize-large">
+                    <%= Card.Icon %>
+                </span>
+            </div>
+            <div class="row">
+                <textarea class="form-control card-detail-ability-ch" rows="6" readonly="readonly"><%= Card.Ability_Ch %></textarea>
+            </div>
+            <div class="row">
+                <ul class="nav nav-tabs zx-card-tabs">
+                  <li class="active" data-tab="desc"><a href="#">Desc.</a></li>
+                  <li data-tab="neta"><a href="#">Nta.</a></li>
+                  <li data-tab="ruling"><a href="#">Rul.</a></li>
+                </ul>
+                <div class="zx-tab-pages">
+                    <div class="card-description" data-tab="desc">
+                        <textarea><%= Card.Description_Ch %></textarea>
+                    </div>
+                    <div class="card-neta" data-tab="neta" style="display:none;">
+                        <textarea><%= Card.Neta %></textarea>
+                    </div>
+                    <div class="card-ruling" data-tab="ruling" style="display:none;">
+                        <textarea><%= Card.Ruling %></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    
 </head>
 <body>
     <!-- navbar -->
@@ -101,7 +210,7 @@
                         <from class="form-inline">
                             <div class="form-group" style="width:59%;">
                                 <select class="form-control filter-powers">
-                                    <option data-start="500" data-end="11000" data-step="500">500</option>
+                                    <option></option>
                                 </select>
                             </div>
                             <div class="form-group" style="width:39%;">
@@ -146,68 +255,13 @@
 
         <!-- main-center -->
 
-
         <div class="main-card-summary col-lg-3 col-md-3">
-            <div class="row"></div>
-            <div class="row">
-                <select class="form-control card-summary-versions">
-                </select>
-            </div>
-            <div class="row">
-                <div class="card-summary-dummyImg">
-                    <div class="img-rounded card-summary-image"></div>
-                </div>
-            </div>
 
-            <div class="row">
-                <span class="label label-default card-summary-illustrator pull-left"></span>
-                <button type="button" class="btn btn-primary btn-xs pull-right card-summary-details">详细情报</button>
-            </div>
-            <div class="row" style="text-align:right;">
-                
-            </div>
         </div>
 
-        <!-- main-detail  -->
         <div class="main-card-detail col-lg-4 col-md-3">
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row card-detail-tags" style="line-height:0px;">
-            </div>
-            <div class="row">
-                <span class="card-detail-cardname-ch"></span>
-            </div>
-            <div class="row">
-                <span class="card-detail-cardname-jp"></span>
-            </div>
-            <div class="row" style="line-height:32px;">
-                <span>COST:</span><span class="card-detail-cost card-detail-fontsize-large"></span>
-                <span>POWER:</span><span class="card-detail-power card-detail-fontsize-large"></span>
-                <span>ICON:</span><span class="card-icon card-detail-icon card-detail-fontsize-large"></span>
-            </div>
-            <div class="row">
-                <textarea class="form-control card-detail-ability-ch" rows="6" readonly="readonly"></textarea>
-            </div>
-            <div class="row">
-                <ul class="nav nav-tabs zx-card-tabs">
-                  <li class="active" data-tab="desc"><a href="#">Desc.</a></li>
-                  <li data-tab="neta"><a href="#">Nta.</a></li>
-                  <li data-tab="ruling"><a href="#">Rul.</a></li>
-                </ul>
-                <div class="zx-tab-pages">
-                    <div class="card-description" data-tab="desc">
-                        <textarea></textarea>
-                    </div>
-                    <div class="card-neta" data-tab="neta" style="display:none;">
-                        <textarea></textarea>
-                    </div>
-                    <div class="card-ruling" data-tab="ruling" style="display:none;">
-                        <textarea></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+        </div>
 
         <!-- filter result -->
         <div class="main-filter-result col-lg-2 col-md-2" style="height:100%;">
