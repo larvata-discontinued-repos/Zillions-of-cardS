@@ -228,11 +228,14 @@
         <%
             var iconClass = ''
             var iconText = ''
+            var iconDescription = ''
             if (Card.Icon === '-') {
                 iconText='-'
             }
             else{
                 iconClass = 'card-icon icon-' +  Card.Icon.toLowerCase()
+                if (Card.Icon.toLowerCase() === 'ig') iconDescription='点燃'
+                if (Card.Icon.toLowerCase() === 'es') iconDescription='觉醒之种'   
             }
         %>
         <div class="row"></div>
@@ -260,9 +263,11 @@
                 <%= Card.Power %>
             </span>
             <span><%= language_packs[language_id].text_details_icon %>:</span>
-            <span class="card-icon card-detail-icon card-detail-fontsize-large <%= iconClass %>">
-                <%= iconText %>
-            </span>
+            <a href="#" title="<%= iconDescription %>">
+                <span class="card-icon card-detail-icon card-detail-fontsize-large <%= iconClass %>">
+                    <%= iconText %> 
+                </span>
+            </a>
         </div>
         <div class="row">
             <textarea class="form-control card-detail-ability-ch" rows="6" readonly="readonly"><%= Card.Ability_Ch %></textarea>

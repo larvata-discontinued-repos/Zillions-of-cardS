@@ -238,7 +238,7 @@ $(function() {
       _.each(this.collection.models, function(model) {
         model.set('Filtered', false);
         if (conditions.keyword.length !== 0) {
-          if (((model.get('CardName_Ch') != null) && model.get('CardName_Ch').search(conditions.keyword) === -1) && ((model.get('CardName_Jp') != null) && model.get('CardName_Jp').search(conditions.keyword) === -1) && ((model.get('Nickname') != null) && model.get('Nickname').search(conditions.keyword) === -1)) {
+          if (((model.get('CardName_Ch') != null) && model.get('CardName_Ch').search(conditions.keyword) === -1) && ((model.get('CardName_Jp') != null) && model.get('CardName_Jp').search(conditions.keyword) === -1) && ((model.get('Nickname') != null) && model.get('Nickname').search(conditions.keyword) === -1) && ((model.get('SerialNo') != null) && model.get('SerialNo').toLowerCase().search(conditions.keyword.toLowerCase()) === -1)) {
             model.set('Filtered', true);
           }
         }
