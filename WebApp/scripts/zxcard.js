@@ -29,7 +29,7 @@ $(function() {
       Icon: '',
       Race: '',
       CardSet: '',
-      Rearity: '',
+      Rarity: '',
       Tags: ''
     }
   });
@@ -177,7 +177,30 @@ $(function() {
       this.model.set('Icon', _.chain(this.collection.pluck("Icon")).uniq().compact().without("-").value());
       this.model.set('Race', _.chain(this.collection.pluck("Race")).uniq().compact().without("-").value());
       this.model.set('CardSet', _.chain(this.collection.pluck("CardSet")).uniq().compact().without("-").value());
-      this.model.set('Rarity', _.chain(this.collection.pluck("Rarity")).uniq().compact().without("-").value());
+      this.model.set('Rarity', _.chain(this.collection.pluck("Rarity")).uniq().compact().without("-").sortBy(function(rarity) {
+        switch (rarity.toLowerCase()) {
+          case "cvr":
+            return 1;
+          case "igr":
+            return 2;
+          case "z/xr":
+            return 3;
+          case "sp":
+            return 4;
+          case "r":
+            return 5;
+          case "uc":
+            return 6;
+          case "c":
+            return 7;
+          case "f":
+            return 8;
+          case "pr":
+            return 9;
+          default:
+            return 99;
+        }
+      }).value());
       this.model.set('Tag', _.chain(this.collection.pluck("Tag")).uniq().compact().without("-").value());
       return this.$el.html(this.template({
         filterData: this.model.toJSON()

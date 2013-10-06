@@ -25,7 +25,7 @@ $ ->
 			Icon         : '', # 标记
 			Race         : '', # 种族
 			CardSet      : '', # 卡组
-			Rearity      : '', # 稀有度
+			Rarity      : '', # 稀有度
 			Tags         : ''  # 
 		}
 	)
@@ -155,7 +155,21 @@ $ ->
 			@model.set('Icon',_.chain(@collection.pluck("Icon")).uniq().compact().without("-").value())
 			@model.set('Race',_.chain(@collection.pluck("Race")).uniq().compact().without("-").value())
 			@model.set('CardSet',_.chain(@collection.pluck("CardSet")).uniq().compact().without("-").value())
-			@model.set('Rarity',_.chain(@collection.pluck("Rarity")).uniq().compact().without("-").value())
+			@model.set('Rarity',_.chain(@collection.pluck("Rarity")).uniq().compact().without("-").sortBy((rarity)->
+
+				switch rarity.toLowerCase()
+					when "cvr" then return 1
+					when "igr" then return 2
+					when "z/xr" then return 3
+					when "sp" then return 4
+					when "r" then return 5
+					when "uc" then return 6
+					when "c" then return 7
+					when "f" then return 8
+					when "pr" then return 9
+					else return 99
+
+				).value())
 			@model.set('Tag',_.chain(@collection.pluck("Tag")).uniq().compact().without("-").value())
 
 			@$el.html(@template({filterData:@model.toJSON()}))

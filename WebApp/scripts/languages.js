@@ -31,7 +31,7 @@ renderStaticLanguageText = function() {
   _results = [];
   for (k in language_packs) {
     v = language_packs[k];
-    _results.push($(".nav-menu-language").next().append("<li><a href='"+location.pathname+"?lng=" + k + "' data-language-id='" + k + "'>" + v.language_name + "</a></li>"));
+    _results.push($(".nav-menu-language").next().append("<li><a href='" + location.pathname + ("?lng=" + k + "' data-language-id='" + k + "'>" + v.language_name + "</a></li>")));
   }
   return _results;
 };
@@ -56,10 +56,10 @@ language_pack_english = {
   "text_filter_all": "All",
   "text_filter_cost": "Cost",
   "text_filter_power": "Power",
-  "text_filter_tag": "Tag",
+  "text_filter_icon": "Icon",
   "text_filter_race": "Race",
   "text_filter_cardset": "Card Set",
-  "text_filter_rearity": "Rearity",
+  "text_filter_rarity": "Rarity",
   "text_summary_details": "Details",
   "text_details_cost": "Cost",
   "text_details_power": "Power",
@@ -90,7 +90,7 @@ language_packs_chinese_s = {
   "text_filter_icon": "标记",
   "text_filter_race": "种族",
   "text_filter_cardset": "卡包",
-  "text_filter_rearity": "稀有度",
+  "text_filter_rarity": "罕贵度",
   "text_summary_details": "详细情报",
   "text_details_cost": "费用",
   "text_details_power": "力量",
