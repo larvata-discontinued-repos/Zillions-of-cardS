@@ -31,7 +31,7 @@ renderStaticLanguageText = function() {
   _results = [];
   for (k in language_packs) {
     v = language_packs[k];
-    _results.push($(".nav-menu-language").next().append("<li><a href='window.html?lng=" + k + "' data-language-id='" + k + "'>" + v.language_name + "</a></li>"));
+    _results.push($(".nav-menu-language").next().append("<li><a href='"+location.pathname+"?lng=" + k + "' data-language-id='" + k + "'>" + v.language_name + "</a></li>"));
   }
   return _results;
 };
