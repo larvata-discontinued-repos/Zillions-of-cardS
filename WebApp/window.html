@@ -10,115 +10,278 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/zx.css">
     <script src="scripts/bootstrap.min.js"></script>
+
+    <script>
+        language_id = 1;
+    </script>
+    <script src="scripts/languages.js"></script>
+
+
     <script src="db/abcout.js"></script>
+
     <script src="scripts/zxcard.js"></script>
 
     <script id="cardListTemplate" type="text/template">
-    <%
-    for (index in CardList){
-        if (CardList[index].Filtered===false&&CardList[index].Disabled===false) {
-            %>
-            <a data-id='<%= CardList[index].Id %>'><span><%= CardList[index].CardName_Ch %></span></a>
-            <%
+        <%
+        for (index in CardList){
+            if (CardList[index].Filtered===false&&CardList[index].Disabled===false) {
+                %>
+                <a data-id='<%= CardList[index].Id %>'><span><%= CardList[index].CardName_Ch %></span></a>
+                <%
+            }
         }
-    }
-    %>
+        %>
     </script>
 
-    <script id="cardSummaryTemplate" type="text/template">
-        <%
-            // var Card=obj.toJSON();
-            // console.log(Card);
-        %>
-        <div class="main-card-summary col-lg-3 col-md-3">
-            <div class="row"></div>
-            <div class="row">
-                <select class="form-control card-summary-versions">
-                <%
-                for (var index in Card.Relations){
+    <script id="filterPanelTemplate" type="text/template">
+        <div class="panel" style="background-color:#f7f5fa;">
+            <div class="panel-body">
+                <div class="row">
+                    <form action="" class="form-inline">
+                        <div class="form-group" style="width:68%;">
+                            <input type="text" class="form-control filter-keyword" placeholder="Keyword">
+                        </div>
+                        <div class="form-group" style="width:30%;">
+                            <button type="button" class="btn btn-default btn-reset"><%= language_packs[language_id].text_filter_reset %></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <select class="form-control filter-types">
+                        <option value=''>(<%= language_packs[language_id].text_filter_all %>)</option>
+                        <%
+                        for (var i=0; i<filterData.Type.length; i++){
+                        %>
+                            <option value='<%= filterData.Type[i] %>'><%= filterData.Type[i] %></option>
+                        <%
+                        }
+                        %>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="btn-group filter-colors" data-toggle="buttons">
+                        <%
+                        for (var i=0; i<filterData.Colors.length; i++){
+                        %>
+                            <label class='btn btn-primary btn-xs'><input type='checkbox' value='<%= filterData.Colors[i] %>'><%= filterData.Colors[i] %></label>
+                        <%
+                        }
+                        %>
+                    </div>
+                </div>
+                <div class="row">
+                    <form action="" class="form-inline">
+                        <div class="form-group" style="width:59%;">
+                            <select class="form-control filter-costs">
+                                <option value='-1'>(<%= language_packs[language_id].text_filter_cost %>)</option>
+                                <%
+                                for (var i=0; i<filterData.Cost.length; i++){
+                                %>
+                                    <option><%= filterData.Cost[i] %></option>
+                                <%
+                                }
+                                %>
+                            </select>
+                        </div>
+                        <div class="form-group" style="width:39%;">
+                            <select class="form-control filter-cost-method">
+                                <option>=</option>
+                                <option>></option>
+                                <option><</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
 
-                    var obj = Card.Relations[index]
-                    console.log(Card.Relations[index]);
-                    %>
-                    <option data-id="<%= obj.Id %>"><%= obj.SerialNo %> <%= obj.Version %></option>
-                    <%
-                }
-                %>
-                </select>
-            </div>
-            <div class="row">
-                <div class="card-summary-dummyImg">
-                    <div class="img-rounded card-summary-image" style="background-image: url(images/card-img/<%= Card.SerialNo+Card.Img_Suffix %>.png);">
+                <div class="row">
+                    <from class="form-inline">
+                        <div class="form-group" style="width:59%;">
+                            <select class="form-control filter-powers">
+                                <option value='-1'>(<%= language_packs[language_id].text_filter_power %>)</option>
+                                <%
+                                for (var i=0; i<filterData.Power.length; i++){
+                                %>
+                                    <option><%= filterData.Power[i] %></option>
+                                <%
+                                }
+                                %>
+                            </select>
+                        </div>
+                        <div class="form-group" style="width:39%;">
+                            <select class="form-control filter-power-method">
+                                <option>=</option>
+                                <option>></option>
+                                <option><</option>
+                            </select>
+                        </div>
+                    </from>
+                </div>
+
+                <div class="row">
+                    <select class="form-control filter-icons">
+                        <option value=''>(<%= language_packs[language_id].text_filter_icon %>)</option>
+                        <%
+                        for (var i=0; i<filterData.Icon.length; i++){
+                        %>
+                            <option value='<%= filterData.Icon[i] %>'><%= filterData.Icon[i] %></option>
+                        <%
+                        }
+                        %>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <select class="form-control filter-races">
+                        <option value=''>(<%= language_packs[language_id].text_filter_race %>)</option>
+                        <%
+                        for (var i=0; i<filterData.Race.length; i++){
+                        %>
+                            <option value='<%= filterData.Race[i] %>'><%= filterData.Race[i] %></option>
+                        <%
+                        }
+                        %>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <select class="form-control filter-cardsets">
+                        <option value=''>(<%= language_packs[language_id].text_filter_cardset %>)</option>
+                        <%
+                        for (var i=0; i<filterData.CardSet.length; i++){
+                        %>
+                            <option value='<%= filterData.CardSet[i] %>'><%= filterData.CardSet[i] %></option>
+                        <%
+                        }
+                        %>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <select class="form-control filter-rarities">
+                        <option value=''>(<%= language_packs[language_id].text_filter_rearity %>)</option>
+                        <%
+                        for (var i=0; i<filterData.Rarity.length; i++){
+                        %>
+                            <option value='<%= filterData.Rarity[i] %>'><%= filterData.Rarity[i] %></option>
+                        <%
+                        }
+                        %>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="btn-group filter-tags" data-toggle="buttons">
+                        <%
+                        for (var i=0; i<filterData.Tag.length; i++){
+                        %>
+                            <label class='btn btn-primary btn-xs'>
+                                <input type='checkbox' value='<%= filterData.Tag[i] %>'>
+                                <%= filterData.Tag[i] %>
+                            </label>
+                        <%
+                        }
+                        %>
                     </div>
                 </div>
 
             </div>
+        </div>
+    </script>
 
-            <div class="row">
-                <span class="label label-default card-summary-illustrator pull-left">
-                    <%= Card.Illustrator %>
-                </span>
-                <button type="button" class="btn btn-primary btn-xs pull-right card-summary-details">详细情报</button>
+    <script id="cardSummaryTemplate" type="text/template">
+        <div class="row"></div>
+        <div class="row">
+            <select class="form-control card-summary-versions">
+            <%
+            for (var index in Card.Relations){
+
+                var obj = Card.Relations[index]
+                var selected = ''
+                if (obj.Id===Card.Id){selected="selected"}
+                //console.log(Card.Relations[index]);
+                %>
+                <option data-id="<%= obj.Id %>" <%= selected %>><%= obj.SerialNo %> <%= obj.Version %></option>
+                <%
+            }
+            %>
+            </select>
+        </div>
+        <div class="row">
+            <div class="card-summary-dummyImg">
+                <div class="img-rounded card-summary-image" style="background-image: url(images/card-img/<%= Card.SerialNo+Card.Img_Suffix %>.png);">
+                </div>
             </div>
-            <div class="row" style="text-align:right;">
-            </div>
+
+        </div>
+
+        <div class="row">
+            <span class="label label-default card-summary-illustrator pull-left">
+                <%= Card.Illustrator %>
+            </span>
+            <button type="button" class="btn btn-primary btn-xs pull-right card-summary-details"><%= language_packs[language_id].text_summary_details %></button>
+        </div>
+        <div class="row" style="text-align:right;">
         </div>
     </script>
 
     <script id="cardDetailsTemplate" type="text/template">
         <%
-            // var Card=obj.toJSON();
-            // console.log(Card);
+            var iconClass = ''
+            var iconText = ''
+            if (Card.Icon === '-') {
+                iconText='-'
+            }
+            else{
+                iconClass = 'card-icon icon-' +  Card.Icon.toLowerCase()
+            }
         %>
-        <div class="main-card-detail col-lg-4 col-md-3">
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row card-detail-tags" style="line-height:0px;">
-                <span class="icon"></span>
-                <span class="label label-default"><%= Card.SerialNo %></span>
-                <span class="label label-default"><%= Card.Rarity %></span>
-                <span class="label label-default"><%= Card.Race %></span>
-                <span class="label label-default"><%= Card.Type %></span>
-            </div>
-            <div class="row">
-                <span class="card-detail-cardname-ch"><%= Card.CardName_Ch %></span>
-            </div>
-            <div class="row">
-                <span class="card-detail-cardname-jp"><%= Card.CardName_Jp %></span>
-            </div>
-            <div class="row" style="line-height:32px;">
-                <span>COST:</span>
-                <span class="card-detail-cost card-detail-fontsize-large">
-                    <%= Card.Cost %>
-                </span>
-                <span>POWER:</span>
-                <span class="card-detail-power card-detail-fontsize-large">
-                    <%= Card.Power %>
-                </span>
-                <span>ICON:</span>
-                <span class="card-icon card-detail-icon card-detail-fontsize-large">
-                    <%= Card.Icon %>
-                </span>
-            </div>
-            <div class="row">
-                <textarea class="form-control card-detail-ability-ch" rows="6" readonly="readonly"><%= Card.Ability_Ch %></textarea>
-            </div>
-            <div class="row">
-                <ul class="nav nav-tabs zx-card-tabs">
-                  <li class="active" data-tab="desc"><a href="#">Desc.</a></li>
-                  <li data-tab="neta"><a href="#">Nta.</a></li>
-                  <li data-tab="ruling"><a href="#">Rul.</a></li>
-                </ul>
-                <div class="zx-tab-pages">
-                    <div class="card-description" data-tab="desc">
-                        <textarea><%= Card.Description_Ch %></textarea>
-                    </div>
-                    <div class="card-neta" data-tab="neta" style="display:none;">
-                        <textarea><%= Card.Neta %></textarea>
-                    </div>
-                    <div class="card-ruling" data-tab="ruling" style="display:none;">
-                        <textarea><%= Card.Ruling %></textarea>
-                    </div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row card-detail-tags" style="line-height:0px;">
+            <span class="icon"></span>
+            <span class="label label-default"><%= Card.SerialNo %></span>
+            <span class="label label-default"><%= Card.Rarity %></span>
+            <span class="label label-default"><%= Card.Race %></span>
+            <span class="label label-default"><%= Card.Type %></span>
+        </div>
+        <div class="row">
+            <span class="card-detail-cardname-ch"><%= Card.CardName_Ch %></span>
+        </div>
+        <div class="row">
+            <span class="card-detail-cardname-jp"><%= Card.CardName_Jp %></span>
+        </div>
+        <div class="row" style="line-height:32px;">
+            <span><%= language_packs[language_id].text_details_cost %>:</span>
+            <span class="card-detail-cost card-detail-fontsize-large">
+                <%= Card.Cost %>
+            </span>
+            <span><%= language_packs[language_id].text_details_power %>:</span>
+            <span class="card-detail-power card-detail-fontsize-large">
+                <%= Card.Power %>
+            </span>
+            <span><%= language_packs[language_id].text_details_icon %>:</span>
+            <span class="card-icon card-detail-icon card-detail-fontsize-large <%= iconClass %>">
+                <%= iconText %>
+            </span>
+        </div>
+        <div class="row">
+            <textarea class="form-control card-detail-ability-ch" rows="6" readonly="readonly"><%= Card.Ability_Ch %></textarea>
+        </div>
+        <div class="row">
+            <ul class="nav nav-tabs zx-card-tabs">
+              <li class="active" data-tab="desc"><a href="#"><%= language_packs[language_id].text_details_description %></a></li>
+              <li data-tab="neta"><a href="#"><%= language_packs[language_id].text_details_neta %></a></li>
+              <li data-tab="ruling"><a href="#"><%= language_packs[language_id].text_details_ruling %></a></li>
+            </ul>
+            <div class="zx-tab-pages">
+                <div class="card-description" data-tab="desc">
+                    <textarea><%= Card.Description_Ch %></textarea>
+                </div>
+                <div class="card-neta" data-tab="neta" style="display:none;">
+                    <textarea><%= Card.Neta %></textarea>
+                </div>
+                <div class="card-ruling" data-tab="ruling" style="display:none;">
+                    <textarea><%= Card.Ruling %></textarea>
                 </div>
             </div>
         </div>
@@ -142,22 +305,19 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a data-toggle="modal" href="#modal-about">About</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Load Db...</a></li>
-              <li><a href="#">Save Db As...</a></li>
-              <li role="presentation" class="divider"></li>
-              <li><a href="http://zx.colintrinity.com/">Z/X db Site</a></li>
-            </ul>
-          </li>
+            <li><a data-toggle="modal" class="nav-menu-about" href="#modal-about">About</a></li>
             <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Languages <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle nav-menu-tools" data-toggle="dropdown">Tools <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" class="nav-menu-loaddb"><s>Load Db...</s></a></li>
+                    <li><a href="#" class="nav-menu-savedb"><s>Save Db As...</s></a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li><a href="http://zx.colintrinity.com/" class="nav-menu-site">Z/X db Site</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-menu-language" data-toggle="dropdown">Languages<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="#">English</a></li>
-              <li><a href="#">中文</a></li>
-              <li><a href="#">正體字</a></li>
             </ul>
           </li>
         </ul>
@@ -169,88 +329,7 @@
 
         <!-- main-left -->
         <div class="col-lg-3 col-md-4 zx-panel-filter">
-            <div class="panel" style="background-color:#f7f5fa;">
-                <div class="panel-body">
-                    <div class="row">
-                        <form action="" class="form-inline">
-                            <div class="form-group" style="width:68%;">
-                                <input type="text" class="form-control filter-keyword" placeholder="Keyword">
-                            </div>
-                            <div class="form-group" style="width:30%;">
-                                <button type="button" class="btn btn-default btn-reset">Reset</button>
-                            </div>
-                        </form>
-                       
-                    </div>
-                    <div class="row">
-                        <select class="form-control filter-types">
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="btn-group filter-colors" data-toggle="buttons">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <form action="" class="form-inline">
-                            <div class="form-group" style="width:59%;">
-                                <select class="form-control filter-costs">
-                                </select>
-                            </div>
-                            <div class="form-group" style="width:39%;">
-                                <select class="form-control filter-cost-method">
-                                    <option>=</option>
-                                    <option>></option>
-                                    <option><</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
 
-                    <div class="row">
-                        <from class="form-inline">
-                            <div class="form-group" style="width:59%;">
-                                <select class="form-control filter-powers">
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="width:39%;">
-                                <select class="form-control filter-power-method">
-                                    <option>=</option>
-                                    <option>></option>
-                                    <option><</option>
-                                </select>
-                            </div>
-                        </from>
-                    </div>
-
-                    <div class="row">
-                        <select class="form-control filter-icons">
-                        </select>
-                    </div>
-
-                    <div class="row">
-                        <select class="form-control filter-races">
-                        </select>
-
-                    </div>
-
-                    <div class="row">
-                        <select class="form-control filter-cardsets">
-                        </select>
-                    </div>
-
-                    <div class="row">
-                        <select class="form-control filter-rarities">
-                        </select>
-                    </div>
-
-                    <div class="row">
-                        <div class="btn-group filter-tags" data-toggle="buttons">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
 
         <!-- main-center -->
@@ -277,11 +356,11 @@
             <h4 class="modal-title">Zillions of cardS</h4>
           </div>
           <div class="modal-body">
-            <p>Version: 0.1</p>
-            <p >Cards in Database: <span class="about-card-count"></span></p>
+            <p><span class="about-version">Version:</span><span>0.1</span></p>
+            <p><span class="about-count">Cards in Database: </span><span class="about-card-count"></span></p>
             
-            <p>Powered by: <a href="#">Larvata</a></p>
-            <p>Project Site: <a target="_blank" href="https://github.com/larvata/Zillions-of-cardS">https://github.com/larvata/Zillions-of-cardS</a></p>
+            <p><span class="about-designer">Powered by:</span><a href="#">Larvata</a></p>
+            <p><span class="about-site">Project Site:</span><a target="_blank" href="https://github.com/larvata/Zillions-of-cardS">https://github.com/larvata/Zillions-of-cardS</a></p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
