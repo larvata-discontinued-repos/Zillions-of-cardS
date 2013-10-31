@@ -26,3 +26,10 @@ textarea[readonly]{background-color:#fff !important;cursor:default !important}
 .card-color-green .card-icon.icon-ig{background-image:url(../images/icons/ig_green.png)}
 .card-color-red .icon{background-image:url(../images/icons/ico_red.png)}
 .card-color-red .card-icon.icon-ig{background-image:url(../images/icons/ig_red.png)}
+.card-color-mu .icon{background-image:url(../images/icons/ico_mu.png)}
+.card-color-dragon .icon{background-image:url(../images/icons/ico_dragon.png)}
+.color-red{color:#f00}
+.color-blue{color:#00f}
+.color-golden{color:#ff0}
+.color-purple{color:#800080}
+.color-green{color:#008000}

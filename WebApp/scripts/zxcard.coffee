@@ -1,3 +1,64 @@
+getRaceIdByName = (race)->
+	switch race
+		# red
+		when "勇者" then return 1
+		when "巨兽" then return 2
+		when "技师" then return 3
+		when "神兽" then return 4
+		when "荣光龙" then return 5
+		# blue
+		when "战斗服" then return 6
+		when "金属要塞" then return 7
+		when "人鱼" then return 8
+		when "杀人机械" then return 9
+		when "齿轮龙" then return 10
+		# golden
+		when "天使" then return 11
+		when "守护者" then return 12
+		when "圣兽" then return 13
+		when "猫妖精" then return 14
+		when "神使龙" then return 15
+		# purple
+		when "魔人" then return 16
+		when "捕食者" then return 17
+		when "不死者" then return 18
+		when "拷问刑具" then return 19
+		when "残酷龙" then return 20
+		# green
+		when "蓬莱" then return 21
+		when "兽化人" then return 22
+		when "叶人" then return 23
+		when "花虫" then return 24
+		when "藤蔓龙" then return 25
+		# red
+		when "拉哈鲁" then return 26
+		when "玛奥" then return 27
+		when "拉兹贝莉露" then return 28
+		when "中BOSS" then return 29
+		# blue
+		when "亚莎纪" then return 30
+		when "阿迪鲁" then return 31
+		when "罗萨莉" then return 32
+		when "阿库塔雷" then return 33
+		# golde
+		when "芙蓉" then return 34
+		when "莉莉艾尔" then return 35
+		when "阿尔蒂娜" then return 36
+		when "普莉耶" then return 37
+		when "普拉姆" then return 38
+		# purple
+		when "艾多娜" then return 39
+		when "瓦尔巴特杰" then return 40
+		when "死亡子" then return 41
+		when "风花" then return 42
+		# green
+		when "普利尼" then return 43
+		when "玛洛妮" then return 44
+		when "亚修" then return 45
+		when "梅塔莉卡" then return 46
+		when "百骑兵" then return 47
+		when "碧丝可" then return 48
+		when "迷宫小姐" then return 49
 
 $ ->
 
@@ -11,7 +72,8 @@ $ ->
 		_.extend value,{Relations:list}
 		_.extend value,{Id:key}
 		
-	$('.about-card-count').text(dbMain.length)
+	$('.about-card-count').text(_.filter(dbMain,(card)->!card.Disabled).length)
+	$('.about-card-count-total').text(dbMain.length)
 
 	FilterModel = Backbone.Model.extend(
 		defaults: {
@@ -25,7 +87,7 @@ $ ->
 			Icon         : '', # 标记
 			Race         : '', # 种族
 			CardSet      : '', # 卡组
-			Rarity      : '', # 稀有度
+			Rarity       : '', # 罕贵度
 			Tags         : ''  # 
 		}
 	)
@@ -153,24 +215,34 @@ $ ->
 			@model.set('Cost',_.chain(@collection.pluck("Cost")).uniq().compact().without("-").sortBy((cost)-> parseInt(cost)).value())
 			@model.set('Power',_.chain(@collection.pluck("Power")).uniq().compact().without("-").sortBy((power)-> parseInt(power)).value())
 			@model.set('Icon',_.chain(@collection.pluck("Icon")).uniq().compact().without("-").value())
-			@model.set('Race',_.chain(@collection.pluck("Race")).uniq().compact().without("-").value())
+			@model.set('Race',_.chain(@collection.pluck("Race")).uniq().compact().without("-").sortBy((race)->
+				getRaceIdByName(race);
+			).value())
+
 			@model.set('CardSet',_.chain(@collection.pluck("CardSet")).uniq().compact().without("-").value())
 			@model.set('Rarity',_.chain(@collection.pluck("Rarity")).uniq().compact().without("-").sortBy((rarity)->
-
 				switch rarity.toLowerCase()
 					when "cvr" then return 1
 					when "igr" then return 2
 					when "z/xr" then return 3
-					when "sp" then return 4
+					when "sr" then return 4
 					when "r" then return 5
 					when "uc" then return 6
 					when "c" then return 7
 					when "f" then return 8
 					when "pr" then return 9
 					else return 99
+			).value())
 
-				).value())
-			@model.set('Tag',_.chain(@collection.pluck("Tag")).uniq().compact().without("-").value())
+			@model.set('Tag',_.chain(@collection.pluck("Tag")).uniq().compact().without("-").sortBy((tag)->
+				switch tag
+					when "生命恢复" then 1
+					when "虚空使者" then 2
+					when "起始卡" then 3
+					when "范围2" then 4
+					when "范围∞" then 5
+					when "绝界" then 6
+			).value())
 
 			@$el.html(@template({filterData:@model.toJSON()}))
 

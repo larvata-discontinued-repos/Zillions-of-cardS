@@ -85,9 +85,9 @@
                         </div>
                         <div class="form-group" style="width:39%;">
                             <select class="form-control filter-cost-method">
-                                <option>=</option>
-                                <option>></option>
-                                <option><</option>
+                                <option><%= language_packs[language_id].text_filter_equ %></option>
+                                <option><%= language_packs[language_id].text_filter_gte %></option>
+                                <option><%= language_packs[language_id].text_filter_lte %></option>
                             </select>
                         </div>
                     </form>
@@ -109,9 +109,9 @@
                         </div>
                         <div class="form-group" style="width:39%;">
                             <select class="form-control filter-power-method">
-                                <option>=</option>
-                                <option>></option>
-                                <option><</option>
+                                <option><%= language_packs[language_id].text_filter_equ %></option>
+                                <option><%= language_packs[language_id].text_filter_gte %></option>
+                                <option><%= language_packs[language_id].text_filter_lte %></option>
                             </select>
                         </div>
                     </from>
@@ -135,8 +135,20 @@
                         <option value=''>(<%= language_packs[language_id].text_filter_race %>)</option>
                         <%
                         for (var i=0; i<filterData.Race.length; i++){
+                            var raceIndex = getRaceIdByName(filterData.Race[i]);
+                            var raceColorClass = "color-";
+                            if (raceIndex<6) raceColorClass += "red";
+                            else if (raceIndex<11) raceColorClass += "blue";
+                            else if (raceIndex<16) raceColorClass += "golden";
+                            else if (raceIndex<21) raceColorClass += "purple";
+                            else if (raceIndex<26) raceColorClass += "green";
+                            else if (raceIndex<30) raceColorClass += "red";
+                            else if (raceIndex<34) raceColorClass += "blue";
+                            else if (raceIndex<39) raceColorClass += "golden";
+                            else if (raceIndex<43) raceColorClass += "purple";
+                            else if (raceIndex<50) raceColorClass += "green";
                         %>
-                            <option value='<%= filterData.Race[i] %>'><%= filterData.Race[i] %></option>
+                            <option value='<%= filterData.Race[i] %>' class=<%= raceColorClass %>><%= filterData.Race[i] %></option>
                         <%
                         }
                         %>
@@ -241,7 +253,7 @@
         <div class="row"></div>
         <div class="row"></div>
         <div class="row card-detail-tags" style="line-height:0px;">
-            <span class="icon"></span>
+            <a href="#" title="<%= Card.CardColor_Ch %>"><span class="icon"></span></a>
             <span class="label label-default"><%= Card.SerialNo %></span>
             <span class="label label-default"><%= Card.Rarity %></span>
             <span class="label label-default"><%= Card.Race %></span>
@@ -361,8 +373,8 @@
             <h4 class="modal-title">Zillions of cardS</h4>
           </div>
           <div class="modal-body">
-            <p><span class="about-version">Version:</span><span>0.1</span></p>
-            <p><span class="about-count">Cards in Database: </span><span class="about-card-count"></span></p>
+            <p><span class="about-version">Version:</span><span>1.1</span></p>
+            <p><span class="about-count">Cards in Database: </span><span class="about-card-count"></span><span class="about-count-uniq"></span><span class="about-card-count-total"></span><span class="about-count-total"></span></p>
             
             <p><span class="about-designer">Powered by:</span><a href="#">Larvata</a></p>
             <p><span class="about-site">Project Site:</span><a target="_blank" href="https://github.com/larvata/Zillions-of-cardS">https://github.com/larvata/Zillions-of-cardS</a></p>
