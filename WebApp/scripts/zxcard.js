@@ -108,11 +108,15 @@ $(function() {
   var AppView, CardDetailsView, CardList, CardListView, CardModel, CardSummaryView, FilterModel, FilterPanelView, app, cardDetailsView, cardListCollection, cardSummaryView, panel;
   _.each(dbMain, function(value, key) {
     var list;
-    if (value.Version.length > 0) {
-      value.Disabled = true;
-    }
     list = _.filter(dbMain, function(obj) {
       return obj.CardName_Ch === value.CardName_Ch;
+    });
+    _.each(list, function(value, key) {
+      if (key === 0) {
+        return value.Disabled = false;
+      } else {
+        return value.Disabled = true;
+      }
     });
     _.extend(value, {
       Relations: list

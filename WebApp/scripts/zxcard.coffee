@@ -63,11 +63,19 @@ getRaceIdByName = (race)->
 $ ->
 
 	# add an uniq id for each card entity
+	# this code is very bukexue
 	_.each dbMain,(value,key)->
-		value.Disabled = true if value.Version.length>0
+		#value.Disabled = true if value.Version.length>0
 			
 		list = _.filter dbMain, (obj)-> 
 			obj.CardName_Ch is value.CardName_Ch
+
+		# set !first sameNameCart as disabled
+		_.each list,(value,key)->
+			if key is 0
+				value.Disabled = false 
+			else
+				value.Disabled = true
 		# code for extract card relation of same cardName
 		_.extend value,{Relations:list}
 		_.extend value,{Id:key}
