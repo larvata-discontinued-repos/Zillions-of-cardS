@@ -85,9 +85,9 @@
                         </div>
                         <div class="form-group" style="width:39%;">
                             <select class="form-control filter-cost-method">
-                                <option><%= language_packs[language_id].text_filter_equ %></option>
-                                <option><%= language_packs[language_id].text_filter_gte %></option>
-                                <option><%= language_packs[language_id].text_filter_lte %></option>
+                                <option value="="><%= language_packs[language_id].text_filter_equ %></option>
+                                <option value=">"><%= language_packs[language_id].text_filter_gte %></option>
+                                <option value="<"><%= language_packs[language_id].text_filter_lte %></option>
                             </select>
                         </div>
                     </form>
@@ -109,9 +109,9 @@
                         </div>
                         <div class="form-group" style="width:39%;">
                             <select class="form-control filter-power-method">
-                                <option><%= language_packs[language_id].text_filter_equ %></option>
-                                <option><%= language_packs[language_id].text_filter_gte %></option>
-                                <option><%= language_packs[language_id].text_filter_lte %></option>
+                                <option value="="><%= language_packs[language_id].text_filter_equ %></option>
+                                <option value=">"><%= language_packs[language_id].text_filter_gte %></option>
+                                <option value="<"><%= language_packs[language_id].text_filter_lte %></option>
                             </select>
                         </div>
                     </from>
@@ -329,7 +329,7 @@
                     <li><a href="#" class="nav-menu-loaddb"><s>Load Db...</s></a></li>
                     <li><a href="#" class="nav-menu-savedb"><s>Save Db As...</s></a></li>
                     <li role="presentation" class="divider"></li>
-                    <li><a href="http://zx.colintrinity.com/" class="nav-menu-site">Z/X db Site</a></li>
+                    <li><a href="http://zx.colintrinity.com/" class="nav-menu-site" target="_blank">Z/X db Site</a></li>
                 </ul>
             </li>
             <li class="dropdown">

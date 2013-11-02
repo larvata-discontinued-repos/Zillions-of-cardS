@@ -235,17 +235,19 @@ $(function() {
     el: '.main-filter-result',
     template: _.template($('#cardListTemplate').html()),
     initialize: function() {
+      this.currentIndex = 0;
+      _.bindAll(this, 'cardNav');
+      $(document).bind('keydown', this.cardNav);
       this.collection = cardListCollection;
+      this.filteredList = _.chain(this.collection.models).filter(function(card) {
+        return card.get('Filtered') === false && card.get('Disabled') === false;
+      }).value();
       return this.render();
     },
     render: function() {
       this.$el.html(this.template({
         CardList: this.collection.toJSON()
       }));
-      $('.main-filter-result a').click(function() {
-        $('.main-filter-result a').removeClass('actived');
-        return $(this).addClass('actived');
-      });
       if (this.collection.length > 0) {
         return this.renderCardDetails();
       }
@@ -259,17 +261,42 @@ $(function() {
         ele = $(event.toElement).closest('a');
         id = ele.data("id");
         model = this.collection.models[id];
+        this.currentIndex = this.filteredList.indexOf(model);
       } else {
-        model = _.find(this.collection.models, function(model) {
-          return model.get('Filtered') === false && model.get('Disabled') === false;
-        });
+        model = this.filteredList[this.currentIndex];
       }
+      $('.main-filter-result a').removeClass('actived');
+      $(".main-filter-result a[data-id=" + (model.get('Id')) + "]").addClass('actived');
       cardSummaryView = new CardSummaryView({
         model: model
       });
       return cardDetailsView = new CardDetailsView({
         model: model
       });
+    },
+    cardNav: function(event) {
+      var lastIndex;
+      if (document.activeElement === document.body) {
+        event.cancelBubble = true;
+        if (event.stopPropagation) {
+          event.stopPropagation();
+        }
+        lastIndex = this.currentIndex;
+        switch (event.keyCode) {
+          case 38:
+            if (this.currentIndex > 0) {
+              this.currentIndex--;
+            }
+            break;
+          case 40:
+            if (this.currentIndex < this.filteredList.length - 1) {
+              this.currentIndex++;
+            }
+        }
+        if (lastIndex !== this.currentIndex) {
+          return this.renderCardDetails();
+        }
+      }
     }
   });
   FilterPanelView = Backbone.View.extend({
@@ -372,7 +399,7 @@ $(function() {
       return {
         keyword: $(".filter-keyword").val(),
         type: $(".filter-types").val(),
-        color: _.pluck($(".filter-colors input:checked"), "value"),
+        colors: _.pluck($(".filter-colors input:checked"), "value"),
         icon: $(".filter-icons").val(),
         race: $(".filter-races").val(),
         cardset: $(".filter-cardsets").val(),
@@ -399,8 +426,8 @@ $(function() {
             model.set('Filtered', true);
           }
         }
-        if (conditions.color.length !== 0) {
-          if (conditions.color === model.get('CardColor_Ch')) {
+        if (conditions.colors.length !== 0) {
+          if (!_.contains(conditions.colors, model.get('CardColor_Ch'))) {
             model.set('Filtered', true);
           }
         }
@@ -422,6 +449,8 @@ $(function() {
         if (conditions.rarity.length !== 0) {
           if (model.get('Rarity').search(conditions.rarity) === -1) {
             model.set('Filtered', true);
+          } else {
+            console.log(model);
           }
         }
         if (conditions.tags.length !== 0) {
@@ -466,6 +495,7 @@ $(function() {
           }
         }
       });
+      $(document).unbind('keydown');
       return new CardListView();
     }
   });

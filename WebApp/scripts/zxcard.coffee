@@ -176,19 +176,19 @@ $ ->
 	CardListView = Backbone.View.extend(
 		el: '.main-filter-result'
 		template: _.template($('#cardListTemplate').html())
+		
 
 		initialize: ->
+			@currentIndex = 0
+			_.bindAll(this,'cardNav')
+			$(document).bind('keydown',this.cardNav)
 			@collection = cardListCollection
-			#console.log @collection
+			@filteredList = _.chain(@collection.models).filter((card)->card.get('Filtered') is false and card.get('Disabled') is false).value()
 			@render()
 
 		render: ->
 			@$el.html(@template({CardList:@collection.toJSON()}))
 			
-			$('.main-filter-result a').click ->
-				$('.main-filter-result a').removeClass('actived')
-				$(@).addClass('actived')
-
 			# load first card when cardlist loaded
 			@renderCardDetails() if @collection.length > 0
 
@@ -201,13 +201,32 @@ $ ->
 				ele = $(event.toElement).closest('a')
 				id = ele.data("id")
 				model = @collection.models[id]
+				@currentIndex=@filteredList.indexOf(model)
 			else
-				model = _.find(@collection.models, (model)->
-					model.get('Filtered') is false and model.get('Disabled') is false
-				)
+				model = @filteredList[@currentIndex]
+
+			$('.main-filter-result a').removeClass('actived')
+			$(".main-filter-result a[data-id=#{model.get('Id')}]").addClass('actived')
 			
 			cardSummaryView = new CardSummaryView({model})
 			cardDetailsView = new CardDetailsView({model})
+
+		cardNav: (event)->
+			if document.activeElement is document.body
+				event.cancelBubble = true #IE
+				event.stopPropagation() if event.stopPropagation #other browsers
+
+				lastIndex=@currentIndex
+
+				switch event.keyCode
+					#when 37
+					when 38
+						@currentIndex-- if @currentIndex > 0
+					#when 39
+					when 40
+						@currentIndex++ if @currentIndex < @filteredList.length-1
+				@renderCardDetails() if lastIndex != @currentIndex
+			
 	)
 
 	FilterPanelView = Backbone.View.extend(
@@ -291,7 +310,7 @@ $ ->
 		getFilterCondition: ->
 			keyword : $(".filter-keyword").val()
 			type : $(".filter-types").val()
-			color : _.pluck($(".filter-colors input:checked"),"value")
+			colors : _.pluck($(".filter-colors input:checked"),"value")
 			icon : $(".filter-icons").val()
 			race : $(".filter-races").val()
 			cardset : $(".filter-cardsets").val()
@@ -318,8 +337,8 @@ $ ->
 					if model.get('Type').search(conditions.type) is -1
 						model.set('Filtered',true)
 
-				if conditions.color.length != 0
-					if conditions.color is model.get('CardColor_Ch')
+				if conditions.colors.length != 0
+					if not _.contains(conditions.colors, model.get('CardColor_Ch'))
 						model.set('Filtered',true)
 						
 				if conditions.icon.length != 0
@@ -337,6 +356,8 @@ $ ->
 				if conditions.rarity.length != 0
 					if model.get('Rarity').search(conditions.rarity) is -1
 						model.set('Filtered',true)
+					else
+						console.log model
 
 				if conditions.tags.length != 0
 					if not _.contains(conditions.tags,model.get('Tag'))
@@ -359,11 +380,9 @@ $ ->
 							model.set('Filtered',true) if parseInt(model.get('Power')) >= parseInt(conditions.power)
 						when "="
 							model.set('Filtered',true) if parseInt(model.get('Power')) != parseInt(conditions.power)
-						
-					
 
+			$(document).unbind('keydown')
 			new CardListView()
-
 	)
 
 
@@ -443,7 +462,6 @@ $ ->
 	cardDetailsView = new CardDetailsView(cardListCollection.models[0])
 
 	panel = new FilterPanelView()
-	#cardListView = 
 	app = new AppView()
 
 
