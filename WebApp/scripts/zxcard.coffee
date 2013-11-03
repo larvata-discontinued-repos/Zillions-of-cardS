@@ -330,7 +330,7 @@ $ ->
 				model.set('Filtered',false)
 
 				if conditions.keyword.length != 0
-					if (model.get('CardName_Ch')? and model.get('CardName_Ch').search(conditions.keyword) is -1) and (model.get('CardName_Jp')? and model.get('CardName_Jp').search(conditions.keyword) is -1) and (model.get('Nickname')? and model.get('Nickname').search(conditions.keyword) is -1) and (model.get('SerialNo')? and model.get('SerialNo').toLowerCase().search(conditions.keyword.toLowerCase()) is -1)
+					if ((!model.get('CardName_Ch')? or model.get('CardName_Ch').search(conditions.keyword) is -1) and (!model.get('CardName_Jp')? or model.get('CardName_Jp').search(conditions.keyword) is -1) and (!model.get('Nickname')? or model.get('Nickname').search(conditions.keyword) is -1) and (!model.get('SerialNo')? or model.get('SerialNo').toLowerCase().search(conditions.keyword.toLowerCase()) is -1))
 						model.set('Filtered',true)
 				
 				if conditions.type.length != 0
@@ -356,8 +356,6 @@ $ ->
 				if conditions.rarity.length != 0
 					if model.get('Rarity').search(conditions.rarity) is -1
 						model.set('Filtered',true)
-					else
-						console.log model
 
 				if conditions.tags.length != 0
 					if not _.contains(conditions.tags,model.get('Tag'))
