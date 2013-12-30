@@ -258,7 +258,7 @@ $(function() {
     renderCardDetails: function(event) {
       var cardDetailsView, cardSummaryView, ele, id, model;
       if (event != null) {
-        ele = $(event.toElement).closest('a');
+        ele = $(event.toElement || event.target).closest('a');
         id = ele.data("id");
         model = this.collection.models[id];
         this.currentIndex = this.filteredList.indexOf(model);

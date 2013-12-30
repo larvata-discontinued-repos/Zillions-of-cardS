@@ -198,7 +198,7 @@ $ ->
 
 		renderCardDetails: (event)->
 			if event?
-				ele = $(event.toElement).closest('a')
+				ele = $(event.toElement||event.target).closest('a')
 				id = ele.data("id")
 				model = @collection.models[id]
 				@currentIndex=@filteredList.indexOf(model)
