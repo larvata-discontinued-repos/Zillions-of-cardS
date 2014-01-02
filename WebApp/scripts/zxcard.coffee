@@ -63,9 +63,12 @@ getRaceIdByName = (race)->
 $ ->
 
 	# add an uniq id for each card entity
-	# this code is very bukexue
+	# this code is very BUKEXUE
 	_.each dbMain,(value,key)->
-		#value.Disabled = true if value.Version.length>0
+
+		# fix Img_Suffix parseString to "null"
+		if value.Img_Suffix is null
+			value.Img_Suffix = ""
 			
 		list = _.filter dbMain, (obj)-> 
 			obj.CardName_Ch is value.CardName_Ch

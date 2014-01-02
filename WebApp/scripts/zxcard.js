@@ -108,6 +108,9 @@ $(function() {
   var AppView, CardDetailsView, CardList, CardListView, CardModel, CardSummaryView, FilterModel, FilterPanelView, app, cardDetailsView, cardListCollection, cardSummaryView, panel;
   _.each(dbMain, function(value, key) {
     var list;
+    if (value.Img_Suffix === null) {
+      value.Img_Suffix = "";
+    }
     list = _.filter(dbMain, function(obj) {
       return obj.CardName_Ch === value.CardName_Ch;
     });
