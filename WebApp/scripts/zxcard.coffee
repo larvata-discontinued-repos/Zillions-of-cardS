@@ -60,7 +60,24 @@ getRaceIdByName = (race)->
 		when "碧丝可" then return 48
 		when "迷宫小姐" then return 49
 
-$ ->
+initCardList=()->
+	
+	# convert simplified chinese to traditional chinese
+	_.each dbMain,(value)->
+		switch language_id
+			
+			when "2"
+				value.CardSet=$.s2t(value.CardSet)
+				value.CardColor_Ch=$.s2t(value.CardColor_Ch)
+				value.CardName_Ch=$.s2t(value.CardName_Ch)
+				value.Type=$.s2t(value.Type)
+				value.Race=$.s2t(value.Race)
+				value.Ability_Ch=$.s2t(value.Ability_Ch)
+				value.Description_Ch=$.s2t(value.Description_Ch)
+				value.Neta=$.s2t(value.Neta)
+				value.Nickname=$.s2t(value.Nickname)
+				value.Ruling=$.s2t(value.Ruling)
+				value.TsugKomi=$.s2t(value.TsugKomi)
 
 	# add an uniq id for each card entity
 	# this code is very BUKEXUE
@@ -69,7 +86,7 @@ $ ->
 		# fix Img_Suffix parseString to "null"
 		if value.Img_Suffix is null
 			value.Img_Suffix = ""
-			
+
 		list = _.filter dbMain, (obj)-> 
 			obj.CardName_Ch is value.CardName_Ch
 
@@ -79,9 +96,15 @@ $ ->
 				value.Disabled = false 
 			else
 				value.Disabled = true
+
 		# code for extract card relation of same cardName
 		_.extend value,{Relations:list}
 		_.extend value,{Id:key}
+
+
+$ ->
+	initCardList()
+
 		
 	$('.about-card-count').text(_.filter(dbMain,(card)->!card.Disabled).length)
 	$('.about-card-count-total').text(dbMain.length)
@@ -184,9 +207,11 @@ $ ->
 		initialize: ->
 			@currentIndex = 0
 			_.bindAll(this,'cardNav')
+			# global event
 			$(document).bind('keydown',this.cardNav)
 			@collection = cardListCollection
-			@filteredList = _.chain(@collection.models).filter((card)->card.get('Filtered') is false and card.get('Disabled') is false).value()
+			@filteredList = _.chain(@collection.models).filter((card)->
+				card.get('Filtered') is false).value()
 			@render()
 
 		render: ->
@@ -200,14 +225,13 @@ $ ->
 		}
 
 		renderCardDetails: (event)->
+			# is fired by user click
 			if event?
 				ele = $(event.toElement||event.target).closest('a')
 				id = ele.data("id")
-				model = @collection.models[id]
-				@currentIndex=@filteredList.indexOf(model)
-			else
-				model = @filteredList[@currentIndex]
-
+				@currentIndex=@filteredList.indexOf(@collection.models[id])
+			
+			model = @filteredList[@currentIndex]
 			$('.main-filter-result a').removeClass('actived')
 			$(".main-filter-result a[data-id=#{model.get('Id')}]").addClass('actived')
 			
@@ -329,7 +353,7 @@ $ ->
 		filterCards: ->
 			conditions = @getFilterCondition()
 			
-			_.each @collection.models, (model)->
+			_.each @collection.models, (model)=>
 				model.set('Filtered',false)
 
 				if conditions.keyword.length != 0
@@ -382,6 +406,16 @@ $ ->
 						when "="
 							model.set('Filtered',true) if parseInt(model.get('Power')) != parseInt(conditions.power)
 
+				if model.get('Filtered') is false
+					list = _.filter @collection.models,(obj)->
+						obj.get('CardName_Ch') is model.get('CardName_Ch')
+
+					_.each list,(value,key)->
+						if key is 0
+							value.set('Filtered',false)
+						else
+							value.set('Filtered',true)
+
 			$(document).unbind('keydown')
 			new CardListView()
 	)
@@ -433,7 +467,7 @@ $ ->
 
 				# Flag
 				Filtered        : false # 被过滤
-				Disabled        : false # 同名卡片
+				Disabled        : false # 同名卡片 只用作数量的区分
 				Selected        : false #
 			}
 	)
@@ -461,9 +495,11 @@ $ ->
 	cardListCollection = new CardList(dbMain)
 	cardSummaryView = new CardSummaryView(cardListCollection.models[0])
 	cardDetailsView = new CardDetailsView(cardListCollection.models[0])
-
 	panel = new FilterPanelView()
 	app = new AppView()
+
+	panel.filterCards()
+
 
 
 

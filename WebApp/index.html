@@ -6,6 +6,7 @@
     <script src="scripts/jquery-2.0.3.min.js"></script>
     <script src="scripts/underscore-min.js"></script>
     <script src="scripts/backbone-min.js"></script>
+    <script src="scripts/jquery.s2t.js"></script>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/zx.css">
@@ -15,10 +16,7 @@
         language_id = 1;
     </script>
     <script src="scripts/languages.js"></script>
-
-
-    <script src="db/abcout.js"></script>
-
+    <script src="db/abcout.db"></script>
     <script src="scripts/zxcard.js"></script>
 
     <script id="cardListTemplate" type="text/template">
@@ -324,18 +322,12 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a data-toggle="modal" class="nav-menu-about" href="#modal-about">About</a></li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle nav-menu-tools" data-toggle="dropdown">Tools <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#" class="nav-menu-loaddb"><s>Load Db...</s></a></li>
-                    <li><a href="#" class="nav-menu-savedb"><s>Save Db As...</s></a></li>
-                    <li role="presentation" class="divider"></li>
-                    <li><a href="http://zx.colintrinity.com/" class="nav-menu-site" target="_blank">Z/X db Site</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
             <a href="#" class="dropdown-toggle nav-menu-language" data-toggle="dropdown">Languages<b class="caret"></b></a>
             <ul class="dropdown-menu">
             </ul>
+            <li>
+                <a href="http://zx.colintrinity.com/" style="padding:5px;" target="_blank"><img src="images/logo.jpg" ></a>
+            </li>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->

@@ -115,8 +115,49 @@ language_packs_chinese_s =
 	"text_details_neta": "卡片解释"
 	"text_details_ruling": "官方裁定"
 
+language_packs_chinese_t =
+	"language_name": "繁体"
+	"text_nav_title": "Zillions of cardS"
+
+	"text_nav_about": "關於"
+	"text_nav_about_version": "版本號:"
+	"text_nav_about_count": "卡牌收錄:"
+	"text_nav_about_count_uniq": "種類,"
+	"text_nav_about_count_total": "個版本"
+	"text_nav_about_designer": "代碼:"
+	"text_nav_about_projectsite": "項目站點:"
+
+	"text_nav_tools": "工具"
+	"text_nav_tools_loaddb": "載入數據庫..."
+	"text_nav_tools_savedb": "據庫另存為..."
+	"text_nav_tools_site": "Z/X中文資料站"
+
+	"text_nav_languages": "語言"
+
+	"text_filter_keyword": "關鍵字"
+	"text_filter_reset": "重 置"
+	"text_filter_all": "全部"
+	"text_filter_cost": "費用"
+	"text_filter_power": "力量"
+	"text_filter_icon": "標記"
+	"text_filter_race": "種族"
+	"text_filter_cardset": "卡包"
+	"text_filter_rarity": "罕貴度"
+	"text_filter_equ":"等於"
+	"text_filter_gte":"以上 （大於等於）"
+	"text_filter_lte":"以下 （小於等於）"
+
+	"text_summary_details": "詳細情報"
+	"text_details_cost": "費用"
+	"text_details_power": "力量"
+	"text_details_icon": "標記"
+	"text_details_description": "卡片描述"
+	"text_details_neta": "卡片解釋"
+	"text_details_ruling": "官方裁定"
+
 language_packs.push language_pack_english
 language_packs.push language_packs_chinese_s
+language_packs.push language_packs_chinese_t
 
 # render static text
 $ ->
