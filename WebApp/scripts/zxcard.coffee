@@ -1,67 +1,12 @@
+
 getRaceIdByName = (race)->
-	switch race
-		# red
-		when "勇者" then return 1
-		when "巨兽" then return 2
-		when "技师" then return 3
-		when "神兽" then return 4
-		when "荣光龙" then return 5
-		# blue
-		when "战斗服" then return 6
-		when "金属要塞" then return 7
-		when "人鱼" then return 8
-		when "杀人机械" then return 9
-		when "齿轮龙" then return 10
-		# golden
-		when "天使" then return 11
-		when "守护者" then return 12
-		when "圣兽" then return 13
-		when "猫妖精" then return 14
-		when "神使龙" then return 15
-		# purple
-		when "魔人" then return 16
-		when "捕食者" then return 17
-		when "不死者" then return 18
-		when "拷问刑具" then return 19
-		when "残酷龙" then return 20
-		# green
-		when "蓬莱" then return 21
-		when "兽化人" then return 22
-		when "叶人" then return 23
-		when "花虫" then return 24
-		when "藤蔓龙" then return 25
-		# red
-		when "拉哈鲁" then return 26
-		when "玛奥" then return 27
-		when "拉兹贝莉露" then return 28
-		when "中BOSS" then return 29
-		# blue
-		when "亚莎纪" then return 30
-		when "阿迪鲁" then return 31
-		when "罗萨莉" then return 32
-		when "阿库塔雷" then return 33
-		# golde
-		when "芙蓉" then return 34
-		when "莉莉艾尔" then return 35
-		when "阿尔蒂娜" then return 36
-		when "普莉耶" then return 37
-		when "普拉姆" then return 38
-		# purple
-		when "艾多娜" then return 39
-		when "瓦尔巴特杰" then return 40
-		when "死亡子" then return 41
-		when "风花" then return 42
-		# green
-		when "普利尼" then return 43
-		when "玛洛妮" then return 44
-		when "亚修" then return 45
-		when "梅塔莉卡" then return 46
-		when "百骑兵" then return 47
-		when "碧丝可" then return 48
-		when "迷宫小姐" then return 49
+	raceList=["勇者","巨兽","技师","神兽","荣光龙","战斗服","金属要塞","人鱼","杀人机械","齿轮龙","天使","守护者","圣兽","猫妖精","神使龙","魔人","捕食者","不死者","拷问刑具","残酷龙","蓬莱","兽化人","叶人","花虫","藤蔓龙","拉哈鲁","玛奥","拉兹贝莉露","中BOSS","亚莎纪","阿迪鲁","罗萨莉","阿库塔雷","芙蓉","莉莉艾尔","阿尔蒂娜","普莉耶","普拉姆","艾多娜","瓦尔巴特杰","死亡子","风花","普利尼","玛洛妮","亚修","梅塔莉卡","百骑兵","碧丝可","迷宫小姐"]
+	switch language_id
+		when "2"
+			race=$.t2s(race)
+	raceList.indexOf(race)
 
 initCardList=()->
-	
 	# convert simplified chinese to traditional chinese
 	_.each dbMain,(value)->
 		switch language_id
@@ -164,23 +109,36 @@ $ ->
 
 				# reset container class
 				@$el.attr("class","main-card-detail col-lg-4 col-md-3")
+				# todo extract to table
 				# set class by color
 				# 蓝|blue", "白|white", "黑|black", "绿|green","红|red","无|mu","龙|dragon
 				classSuffix = ""
 				switch @model.toJSON().CardColor_Ch
-					when "蓝"
+					when "蓝" 
 						classSuffix = "blue"
-					when "白"
+					when "藍"
+						classSuffix = "blue"
+					when "白"  
 						classSuffix = "white"
+					when "黑"
+						classSuffix = "black"
 					when "黑"
 						classSuffix = "black"
 					when "绿"
 						classSuffix = "green"
+					when "綠"
+						classSuffix = "green"
 					when "红"
+						classSuffix = "red"
+					when "紅"
 						classSuffix = "red"
 					when "无"
 						classSuffix = "mu"
+					when "無"
+						classSuffix = "mu"
 					when "龙"
+						classSuffix = "dragon"
+					when "龍"
 						classSuffix = "dragon"
 				@$el.addClass("card-color-#{classSuffix}")
 			
@@ -406,15 +364,20 @@ $ ->
 						when "="
 							model.set('Filtered',true) if parseInt(model.get('Power')) != parseInt(conditions.power)
 
+			_.each @collection.models, (model)=>
 				if model.get('Filtered') is false
 					list = _.filter @collection.models,(obj)->
 						obj.get('CardName_Ch') is model.get('CardName_Ch')
 
-					_.each list,(value,key)->
-						if key is 0
-							value.set('Filtered',false)
-						else
-							value.set('Filtered',true)
+					_.each list,(value,key)=>
+						# if key is 0
+						# 	value.set('Filtered',false)
+						# else
+						# 	value.set('Filtered',true)
+						value.set('Filtered',true)
+					model.set('Filtered',false)
+
+
 
 			$(document).unbind('keydown')
 			new CardListView()

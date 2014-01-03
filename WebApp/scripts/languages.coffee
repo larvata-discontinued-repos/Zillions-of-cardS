@@ -76,7 +76,7 @@ language_pack_english =
 	"text_details_ruling": "Ruling"
 
 language_packs_chinese_s =
-	"language_name": "中文"
+	"language_name": "简体中文"
 	"text_nav_title": "Zillions of cardS"
 
 	"text_nav_about": "关于"
@@ -116,7 +116,7 @@ language_packs_chinese_s =
 	"text_details_ruling": "官方裁定"
 
 language_packs_chinese_t =
-	"language_name": "繁体"
+	"language_name": "繁体中文"
 	"text_nav_title": "Zillions of cardS"
 
 	"text_nav_about": "關於"

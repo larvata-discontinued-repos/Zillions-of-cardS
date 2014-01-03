@@ -22,7 +22,7 @@
     <script id="cardListTemplate" type="text/template">
         <%
         for (index in CardList){
-            if (CardList[index].Filtered===false&&CardList[index].Disabled===false) {
+            if (CardList[index].Filtered===false) {
                 %>
                 <a data-id='<%= CardList[index].Id %>'><span><%= CardList[index].CardName_Ch %></span></a>
                 <%
@@ -120,8 +120,18 @@
                         <option value=''>(<%= language_packs[language_id].text_filter_icon %>)</option>
                         <%
                         for (var i=0; i<filterData.Icon.length; i++){
+                            // todo extract to languages.js
+                            var iconText="";
+                            switch(filterData.Icon[i]){
+                                case "IG":
+                                    iconText="点燃";
+                                    break;
+                                case "ES":
+                                    iconText="觉醒之种";
+                                    break;
+                            }
                         %>
-                            <option value='<%= filterData.Icon[i] %>'><%= filterData.Icon[i] %></option>
+                            <option value='<%= filterData.Icon[i] %>'><%= iconText %></option>
                         <%
                         }
                         %>

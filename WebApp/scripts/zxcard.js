@@ -2,106 +2,13 @@
 var getRaceIdByName, initCardList;
 
 getRaceIdByName = function(race) {
-  switch (race) {
-    case "勇者":
-      return 1;
-    case "巨兽":
-      return 2;
-    case "技师":
-      return 3;
-    case "神兽":
-      return 4;
-    case "荣光龙":
-      return 5;
-    case "战斗服":
-      return 6;
-    case "金属要塞":
-      return 7;
-    case "人鱼":
-      return 8;
-    case "杀人机械":
-      return 9;
-    case "齿轮龙":
-      return 10;
-    case "天使":
-      return 11;
-    case "守护者":
-      return 12;
-    case "圣兽":
-      return 13;
-    case "猫妖精":
-      return 14;
-    case "神使龙":
-      return 15;
-    case "魔人":
-      return 16;
-    case "捕食者":
-      return 17;
-    case "不死者":
-      return 18;
-    case "拷问刑具":
-      return 19;
-    case "残酷龙":
-      return 20;
-    case "蓬莱":
-      return 21;
-    case "兽化人":
-      return 22;
-    case "叶人":
-      return 23;
-    case "花虫":
-      return 24;
-    case "藤蔓龙":
-      return 25;
-    case "拉哈鲁":
-      return 26;
-    case "玛奥":
-      return 27;
-    case "拉兹贝莉露":
-      return 28;
-    case "中BOSS":
-      return 29;
-    case "亚莎纪":
-      return 30;
-    case "阿迪鲁":
-      return 31;
-    case "罗萨莉":
-      return 32;
-    case "阿库塔雷":
-      return 33;
-    case "芙蓉":
-      return 34;
-    case "莉莉艾尔":
-      return 35;
-    case "阿尔蒂娜":
-      return 36;
-    case "普莉耶":
-      return 37;
-    case "普拉姆":
-      return 38;
-    case "艾多娜":
-      return 39;
-    case "瓦尔巴特杰":
-      return 40;
-    case "死亡子":
-      return 41;
-    case "风花":
-      return 42;
-    case "普利尼":
-      return 43;
-    case "玛洛妮":
-      return 44;
-    case "亚修":
-      return 45;
-    case "梅塔莉卡":
-      return 46;
-    case "百骑兵":
-      return 47;
-    case "碧丝可":
-      return 48;
-    case "迷宫小姐":
-      return 49;
+  var raceList;
+  raceList = ["勇者", "巨兽", "技师", "神兽", "荣光龙", "战斗服", "金属要塞", "人鱼", "杀人机械", "齿轮龙", "天使", "守护者", "圣兽", "猫妖精", "神使龙", "魔人", "捕食者", "不死者", "拷问刑具", "残酷龙", "蓬莱", "兽化人", "叶人", "花虫", "藤蔓龙", "拉哈鲁", "玛奥", "拉兹贝莉露", "中BOSS", "亚莎纪", "阿迪鲁", "罗萨莉", "阿库塔雷", "芙蓉", "莉莉艾尔", "阿尔蒂娜", "普莉耶", "普拉姆", "艾多娜", "瓦尔巴特杰", "死亡子", "风花", "普利尼", "玛洛妮", "亚修", "梅塔莉卡", "百骑兵", "碧丝可", "迷宫小姐"];
+  switch (language_id) {
+    case "2":
+      race = $.t2s(race);
   }
+  return raceList.indexOf(race);
 };
 
 initCardList = function() {
@@ -217,8 +124,14 @@ $(function() {
           case "蓝":
             classSuffix = "blue";
             break;
+          case "藍":
+            classSuffix = "blue";
+            break;
           case "白":
             classSuffix = "white";
+            break;
+          case "黑":
+            classSuffix = "black";
             break;
           case "黑":
             classSuffix = "black";
@@ -226,13 +139,25 @@ $(function() {
           case "绿":
             classSuffix = "green";
             break;
+          case "綠":
+            classSuffix = "green";
+            break;
           case "红":
+            classSuffix = "red";
+            break;
+          case "紅":
             classSuffix = "red";
             break;
           case "无":
             classSuffix = "mu";
             break;
+          case "無":
+            classSuffix = "mu";
+            break;
           case "龙":
+            classSuffix = "dragon";
+            break;
+          case "龍":
             classSuffix = "dragon";
         }
         return this.$el.addClass("card-color-" + classSuffix);
@@ -437,7 +362,6 @@ $(function() {
         _this = this;
       conditions = this.getFilterCondition();
       _.each(this.collection.models, function(model) {
-        var list;
         model.set('Filtered', false);
         if (conditions.keyword.length !== 0) {
           if (((model.get('CardName_Ch') == null) || model.get('CardName_Ch').search(conditions.keyword) === -1) && ((model.get('CardName_Jp') == null) || model.get('CardName_Jp').search(conditions.keyword) === -1) && ((model.get('Nickname') == null) || model.get('Nickname').search(conditions.keyword) === -1) && ((model.get('SerialNo') == null) || model.get('SerialNo').toLowerCase().search(conditions.keyword.toLowerCase()) === -1)) {
@@ -501,31 +425,31 @@ $(function() {
           switch (conditions.power_operation) {
             case ">":
               if (parseInt(model.get('Power')) <= parseInt(conditions.power)) {
-                model.set('Filtered', true);
+                return model.set('Filtered', true);
               }
               break;
             case "<":
               if (parseInt(model.get('Power')) >= parseInt(conditions.power)) {
-                model.set('Filtered', true);
+                return model.set('Filtered', true);
               }
               break;
             case "=":
               if (parseInt(model.get('Power')) !== parseInt(conditions.power)) {
-                model.set('Filtered', true);
+                return model.set('Filtered', true);
               }
           }
         }
+      });
+      _.each(this.collection.models, function(model) {
+        var list;
         if (model.get('Filtered') === false) {
           list = _.filter(_this.collection.models, function(obj) {
             return obj.get('CardName_Ch') === model.get('CardName_Ch');
           });
-          return _.each(list, function(value, key) {
-            if (key === 0) {
-              return value.set('Filtered', false);
-            } else {
-              return value.set('Filtered', true);
-            }
+          _.each(list, function(value, key) {
+            return value.set('Filtered', true);
           });
+          return model.set('Filtered', false);
         }
       });
       $(document).unbind('keydown');

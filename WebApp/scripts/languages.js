@@ -79,7 +79,7 @@ language_pack_english = {
 };
 
 language_packs_chinese_s = {
-  "language_name": "中文",
+  "language_name": "简体中文",
   "text_nav_title": "Zillions of cardS",
   "text_nav_about": "关于",
   "text_nav_about_version": "版本号:",
@@ -115,7 +115,7 @@ language_packs_chinese_s = {
 };
 
 language_packs_chinese_t = {
-  "language_name": "繁体",
+  "language_name": "繁体中文",
   "text_nav_title": "Zillions of cardS",
   "text_nav_about": "關於",
   "text_nav_about_version": "版本號:",
