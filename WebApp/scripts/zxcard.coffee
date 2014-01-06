@@ -4,7 +4,7 @@ getRaceIdByName = (race)->
 	switch language_id
 		when "2"
 			race=$.t2s(race)
-	raceList.indexOf(race)
+	raceList.indexOf(race) + 1
 
 initCardList=()->
 	# convert simplified chinese to traditional chinese

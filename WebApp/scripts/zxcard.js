@@ -8,7 +8,7 @@ getRaceIdByName = function(race) {
     case "2":
       race = $.t2s(race);
   }
-  return raceList.indexOf(race);
+  return raceList.indexOf(race) + 1;
 };
 
 initCardList = function() {
