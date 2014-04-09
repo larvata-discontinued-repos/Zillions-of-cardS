@@ -315,7 +315,8 @@ $ ->
 				model.set('Filtered',false)
 
 				if conditions.keyword.length != 0
-					if ((!model.get('CardName_Ch')? or model.get('CardName_Ch').search(conditions.keyword) is -1) and (!model.get('CardName_Jp')? or model.get('CardName_Jp').search(conditions.keyword) is -1) and (!model.get('Nickname')? or model.get('Nickname').search(conditions.keyword) is -1) and (!model.get('SerialNo')? or model.get('SerialNo').toLowerCase().search(conditions.keyword.toLowerCase()) is -1))
+					keyword=conditions.keyword.toLowerCase()
+					if ((!model.get('CardName_Ch')? or model.get('CardName_Ch').toLowerCase().search(keyword) is -1) and (!model.get('CardName_Jp')? or model.get('CardName_Jp').toLowerCase().search(keyword) is -1) and (!model.get('Nickname')? or model.get('Nickname').toLowerCase().search(keyword) is -1) and (!model.get('SerialNo')? or model.get('SerialNo').toLowerCase().search(keyword) is -1))
 						model.set('Filtered',true)
 				
 				if conditions.type.length != 0

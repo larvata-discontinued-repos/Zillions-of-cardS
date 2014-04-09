@@ -358,100 +358,105 @@ $(function() {
       };
     },
     filterCards: function() {
-      var conditions,
-        _this = this;
+      var conditions;
       conditions = this.getFilterCondition();
-      _.each(this.collection.models, function(model) {
-        model.set('Filtered', false);
-        if (conditions.keyword.length !== 0) {
-          if (((model.get('CardName_Ch') == null) || model.get('CardName_Ch').search(conditions.keyword) === -1) && ((model.get('CardName_Jp') == null) || model.get('CardName_Jp').search(conditions.keyword) === -1) && ((model.get('Nickname') == null) || model.get('Nickname').search(conditions.keyword) === -1) && ((model.get('SerialNo') == null) || model.get('SerialNo').toLowerCase().search(conditions.keyword.toLowerCase()) === -1)) {
-            model.set('Filtered', true);
+      _.each(this.collection.models, (function(_this) {
+        return function(model) {
+          var keyword;
+          model.set('Filtered', false);
+          if (conditions.keyword.length !== 0) {
+            keyword = conditions.keyword.toLowerCase();
+            if (((model.get('CardName_Ch') == null) || model.get('CardName_Ch').toLowerCase().search(keyword) === -1) && ((model.get('CardName_Jp') == null) || model.get('CardName_Jp').toLowerCase().search(keyword) === -1) && ((model.get('Nickname') == null) || model.get('Nickname').toLowerCase().search(keyword) === -1) && ((model.get('SerialNo') == null) || model.get('SerialNo').toLowerCase().search(keyword) === -1)) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (conditions.type.length !== 0) {
-          if (model.get('Type').search(conditions.type) === -1) {
-            model.set('Filtered', true);
+          if (conditions.type.length !== 0) {
+            if (model.get('Type').search(conditions.type) === -1) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (conditions.colors.length !== 0) {
-          if (!_.contains(conditions.colors, model.get('CardColor_Ch'))) {
-            model.set('Filtered', true);
+          if (conditions.colors.length !== 0) {
+            if (!_.contains(conditions.colors, model.get('CardColor_Ch'))) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (conditions.icon.length !== 0) {
-          if (model.get('Icon').search(conditions.icon) === -1) {
-            model.set('Filtered', true);
+          if (conditions.icon.length !== 0) {
+            if (model.get('Icon').search(conditions.icon) === -1) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (conditions.race.length !== 0) {
-          if (model.get('Race').search(conditions.race) === -1) {
-            model.set('Filtered', true);
+          if (conditions.race.length !== 0) {
+            if (model.get('Race').search(conditions.race) === -1) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (conditions.cardset.length !== 0) {
-          if (model.get('CardSet').search(conditions.cardset) === -1) {
-            model.set('Filtered', true);
+          if (conditions.cardset.length !== 0) {
+            if (model.get('CardSet').search(conditions.cardset) === -1) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (conditions.rarity.length !== 0) {
-          if (model.get('Rarity').search(conditions.rarity) === -1) {
-            model.set('Filtered', true);
+          if (conditions.rarity.length !== 0) {
+            if (model.get('Rarity').search(conditions.rarity) === -1) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (conditions.tags.length !== 0) {
-          if (!_.contains(conditions.tags, model.get('Tag'))) {
-            model.set('Filtered', true);
+          if (conditions.tags.length !== 0) {
+            if (!_.contains(conditions.tags, model.get('Tag'))) {
+              model.set('Filtered', true);
+            }
           }
-        }
-        if (parseInt(conditions.cost) !== -1) {
-          switch (conditions.cost_operation) {
-            case ">":
-              if (parseInt(model.get('Cost')) <= parseInt(conditions.cost)) {
-                model.set('Filtered', true);
-              }
-              break;
-            case "<":
-              if (parseInt(model.get('Cost')) >= parseInt(conditions.cost)) {
-                model.set('Filtered', true);
-              }
-              break;
-            case "=":
-              if (parseInt(model.get('Cost')) !== parseInt(conditions.cost)) {
-                model.set('Filtered', true);
-              }
+          if (parseInt(conditions.cost) !== -1) {
+            switch (conditions.cost_operation) {
+              case ">":
+                if (parseInt(model.get('Cost')) <= parseInt(conditions.cost)) {
+                  model.set('Filtered', true);
+                }
+                break;
+              case "<":
+                if (parseInt(model.get('Cost')) >= parseInt(conditions.cost)) {
+                  model.set('Filtered', true);
+                }
+                break;
+              case "=":
+                if (parseInt(model.get('Cost')) !== parseInt(conditions.cost)) {
+                  model.set('Filtered', true);
+                }
+            }
           }
-        }
-        if (parseInt(conditions.power) !== -1) {
-          switch (conditions.power_operation) {
-            case ">":
-              if (parseInt(model.get('Power')) <= parseInt(conditions.power)) {
-                return model.set('Filtered', true);
-              }
-              break;
-            case "<":
-              if (parseInt(model.get('Power')) >= parseInt(conditions.power)) {
-                return model.set('Filtered', true);
-              }
-              break;
-            case "=":
-              if (parseInt(model.get('Power')) !== parseInt(conditions.power)) {
-                return model.set('Filtered', true);
-              }
+          if (parseInt(conditions.power) !== -1) {
+            switch (conditions.power_operation) {
+              case ">":
+                if (parseInt(model.get('Power')) <= parseInt(conditions.power)) {
+                  return model.set('Filtered', true);
+                }
+                break;
+              case "<":
+                if (parseInt(model.get('Power')) >= parseInt(conditions.power)) {
+                  return model.set('Filtered', true);
+                }
+                break;
+              case "=":
+                if (parseInt(model.get('Power')) !== parseInt(conditions.power)) {
+                  return model.set('Filtered', true);
+                }
+            }
           }
-        }
-      });
-      _.each(this.collection.models, function(model) {
-        var list;
-        if (model.get('Filtered') === false) {
-          list = _.filter(_this.collection.models, function(obj) {
-            return obj.get('CardName_Ch') === model.get('CardName_Ch');
-          });
-          _.each(list, function(value, key) {
-            return value.set('Filtered', true);
-          });
-          return model.set('Filtered', false);
-        }
-      });
+        };
+      })(this));
+      _.each(this.collection.models, (function(_this) {
+        return function(model) {
+          var list;
+          if (model.get('Filtered') === false) {
+            list = _.filter(_this.collection.models, function(obj) {
+              return obj.get('CardName_Ch') === model.get('CardName_Ch');
+            });
+            _.each(list, function(value, key) {
+              return value.set('Filtered', true);
+            });
+            return model.set('Filtered', false);
+          }
+        };
+      })(this));
       $(document).unbind('keydown');
       return new CardListView();
     }
