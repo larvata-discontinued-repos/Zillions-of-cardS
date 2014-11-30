@@ -3,7 +3,7 @@ var getRaceIdByName, initCardList;
 
 getRaceIdByName = function(race) {
   var raceList;
-  raceList = ["勇者", "巨兽", "技师", "神兽", "荣光龙", "战斗服", "金属要塞", "人鱼", "杀人机械", "齿轮龙", "天使", "守护者", "圣兽", "猫妖精", "神使龙", "魔人", "捕食者", "不死者", "拷问刑具", "残酷龙", "蓬莱", "兽化人", "叶人", "花虫", "藤蔓龙", "拉哈鲁", "玛奥", "拉兹贝莉露", "中BOSS", "亚莎纪", "阿迪鲁", "罗萨莉", "阿库塔雷", "芙蓉", "莉莉艾尔", "阿尔蒂娜", "普莉耶", "普拉姆", "艾多娜", "瓦尔巴特杰", "死亡子", "风花", "普利尼", "玛洛妮", "亚修", "梅塔莉卡", "百骑兵", "碧丝可", "迷宫小姐"];
+  raceList = ["勇者", "巨兽", "技师", "神兽", "荣光龙", "战斗服", "金属要塞", "人鱼", "杀人机械", "齿轮龙", "天使", "守护者", "圣兽", "猫妖精", "神使龙", "魔人", "捕食者", "不死者", "拷问刑具", "残酷龙", "蓬莱", "兽化人", "叶人", "花虫", "藤蔓龙", "魔人/猫妖精", "拉哈鲁", "玛奥", "拉兹贝莉露", "中BOSS", "亚莎纪", "阿迪鲁", "罗萨莉", "阿库塔雷", "芙蓉", "莉莉艾尔", "阿尔蒂娜", "普莉耶", "普拉姆", "艾多娜", "瓦尔巴特杰", "死亡子", "风花", "普利尼", "玛洛妮", "亚修", "梅塔莉卡", "百骑兵", "碧丝可", "迷宫小姐", "阿露露", "朱庇艾尔", "玛利艾尔", "菲蕾丝", "露琪璐", "史黛拉", "泽塔", "佩塔", "姬神", "如月", "基利亚", "兔莉雅", "塞拉菲", "莱德马格纳斯", "虚空之暗", "泽罗凯恩", "库里斯特", "风海纯也", "小暮宗一郎", "北条纱希", "美音", "涅札莉雅", "阿尔雷奇诺", "拉比莉・拉鲁拉・拉", "瓦莲婷", "库萝耶"];
   switch (language_id) {
     case "2":
       race = $.t2s(race);
@@ -249,6 +249,7 @@ $(function() {
     el: '.zx-panel-filter',
     template: _.template($('#filterPanelTemplate').html()),
     initialize: function() {
+      var rawTags, tags;
       this.model = new FilterModel();
       this.collection = cardListCollection;
       this.model.set('Type', _.chain(this.collection.pluck("Type")).uniq().compact().without("-").value());
@@ -288,7 +289,12 @@ $(function() {
             return 99;
         }
       }).value());
-      this.model.set('Tag', _.chain(this.collection.pluck("Tag")).uniq().compact().without("-").sortBy(function(tag) {
+      rawTags = _.chain(this.collection.pluck("Tag")).uniq().compact().without("-").value();
+      tags = [];
+      _.each(rawTags, function(rt) {
+        return tags = tags.concat(rt.split('|'));
+      });
+      this.model.set('Tag', _.sortBy(tags, function(tag) {
         switch (tag) {
           case "生命恢复":
             return 1;
@@ -303,7 +309,7 @@ $(function() {
           case "绝界":
             return 6;
         }
-      }).value());
+      }));
       return this.$el.html(this.template({
         filterData: this.model.toJSON()
       }));
@@ -362,7 +368,7 @@ $(function() {
       conditions = this.getFilterCondition();
       _.each(this.collection.models, (function(_this) {
         return function(model) {
-          var keyword;
+          var isAnyMatch, keyword, tags;
           model.set('Filtered', false);
           if (conditions.keyword.length !== 0) {
             keyword = conditions.keyword.toLowerCase();
@@ -401,7 +407,18 @@ $(function() {
             }
           }
           if (conditions.tags.length !== 0) {
-            if (!_.contains(conditions.tags, model.get('Tag'))) {
+            if (model.get('Tag') != null) {
+              tags = model.get('Tag').split('|');
+              isAnyMatch = _.any(tags, function(tag) {
+                if (_.contains(conditions.tags, tag)) {
+                  return true;
+                }
+                return false;
+              });
+              if (!isAnyMatch) {
+                model.set('Filtered', true);
+              }
+            } else {
               model.set('Filtered', true);
             }
           }

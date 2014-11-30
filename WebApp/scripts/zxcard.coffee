@@ -1,6 +1,83 @@
 
 getRaceIdByName = (race)->
-	raceList=["勇者","巨兽","技师","神兽","荣光龙","战斗服","金属要塞","人鱼","杀人机械","齿轮龙","天使","守护者","圣兽","猫妖精","神使龙","魔人","捕食者","不死者","拷问刑具","残酷龙","蓬莱","兽化人","叶人","花虫","藤蔓龙","拉哈鲁","玛奥","拉兹贝莉露","中BOSS","亚莎纪","阿迪鲁","罗萨莉","阿库塔雷","芙蓉","莉莉艾尔","阿尔蒂娜","普莉耶","普拉姆","艾多娜","瓦尔巴特杰","死亡子","风花","普利尼","玛洛妮","亚修","梅塔莉卡","百骑兵","碧丝可","迷宫小姐"]
+	raceList=[
+		"勇者"
+		"巨兽"
+		"技师"
+		"神兽"
+		"荣光龙"
+		"战斗服"
+		"金属要塞"
+		"人鱼"
+		"杀人机械"
+		"齿轮龙"
+		"天使"
+		"守护者"
+		"圣兽"
+		"猫妖精"
+		"神使龙"
+		"魔人"
+		"捕食者"
+		"不死者"
+		"拷问刑具"
+		"残酷龙"
+		"蓬莱"
+		"兽化人"
+		"叶人"
+		"花虫"
+		"藤蔓龙"
+		"魔人/猫妖精"
+		"拉哈鲁"
+		"玛奥"
+		"拉兹贝莉露"
+		"中BOSS"
+		"亚莎纪"
+		"阿迪鲁"
+		"罗萨莉"
+		"阿库塔雷"
+		"芙蓉"
+		"莉莉艾尔"
+		"阿尔蒂娜"
+		"普莉耶"
+		"普拉姆"
+		"艾多娜"
+		"瓦尔巴特杰"
+		"死亡子"
+		"风花"
+		"普利尼"
+		"玛洛妮"
+		"亚修"
+		"梅塔莉卡"
+		"百骑兵"
+		"碧丝可"
+		"迷宫小姐"
+		"阿露露"
+		"朱庇艾尔"
+		"玛利艾尔"
+		"菲蕾丝"
+		"露琪璐"
+		"史黛拉"
+		"泽塔"
+		"佩塔"
+		"姬神"
+		"如月"
+		"基利亚"
+		"兔莉雅"
+		"塞拉菲"
+		"莱德马格纳斯"
+		"虚空之暗"
+		"泽罗凯恩"
+		"库里斯特"
+		"风海纯也"
+		"小暮宗一郎"
+		"北条纱希"
+		"美音"
+		"涅札莉雅"
+		"阿尔雷奇诺"
+		"拉比莉・拉鲁拉・拉"
+		"瓦莲婷"
+		"库萝耶"]
+
 	switch language_id
 		when "2"
 			race=$.t2s(race)
@@ -246,7 +323,12 @@ $ ->
 					else return 99
 			).value())
 
-			@model.set('Tag',_.chain(@collection.pluck("Tag")).uniq().compact().without("-").sortBy((tag)->
+			rawTags=_.chain(@collection.pluck("Tag")).uniq().compact().without("-").value()
+			tags=[]
+			_.each rawTags,(rt)->
+				tags=tags.concat rt.split('|')
+
+			@model.set 'Tag',_.sortBy tags,(tag)->
 				switch tag
 					when "生命恢复" then 1
 					when "虚空使者" then 2
@@ -254,7 +336,6 @@ $ ->
 					when "范围2" then 4
 					when "范围∞" then 5
 					when "绝界" then 6
-			).value())
 
 			@$el.html(@template({filterData:@model.toJSON()}))
 
@@ -343,9 +424,21 @@ $ ->
 					if model.get('Rarity').search(conditions.rarity) is -1
 						model.set('Filtered',true)
 
-				if conditions.tags.length != 0
-					if not _.contains(conditions.tags,model.get('Tag'))
+				if conditions.tags.length != 0 
+					if model.get('Tag')?
+						tags=model.get('Tag').split('|')
+						isAnyMatch=_.any tags,(tag)->
+							if _.contains(conditions.tags,tag)
+								return true
+							return false
+						if !isAnyMatch
+							model.set('Filtered',true)
+					else
 						model.set('Filtered',true)
+
+
+
+						
 
 				if parseInt(conditions.cost) != -1
 					switch conditions.cost_operation

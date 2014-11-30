@@ -150,11 +150,13 @@
                             else if (raceIndex<16) raceColorClass += "golden";
                             else if (raceIndex<21) raceColorClass += "purple";
                             else if (raceIndex<26) raceColorClass += "green";
-                            else if (raceIndex<30) raceColorClass += "red";
-                            else if (raceIndex<34) raceColorClass += "blue";
-                            else if (raceIndex<39) raceColorClass += "golden";
-                            else if (raceIndex<43) raceColorClass += "purple";
-                            else if (raceIndex<50) raceColorClass += "green";
+                            else if (raceIndex===26) raceColorClass += "grey";
+                            else if (raceIndex<31) raceColorClass += "red";
+                            else if (raceIndex<35) raceColorClass += "blue";
+                            else if (raceIndex<40) raceColorClass += "golden";
+                            else if (raceIndex<44) raceColorClass += "purple";
+                            else if (raceIndex<51) raceColorClass += "green";
+                            else if (raceIndex<77) raceColorClass += "grey";
                         %>
                             <option value='<%= filterData.Race[i] %>' class=<%= raceColorClass %>><%= filterData.Race[i] %></option>
                         <%
